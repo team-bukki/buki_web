@@ -332,6 +332,15 @@ function CardComponent() {
     const [flipped, setFlipped] = useState('');
     const [isHidden, setIsHidden] = useState('hidden');
 
+    const redireactApp = () => {
+        exeDeepLink();
+    };
+
+    function exeDeepLink() {
+        const url = 'coin.buki://';
+        window.location.href = url;
+    }
+
     useEffect(() => {
         setTimeout(() => setIsHidden(''), 4600);
     }, []);
@@ -378,7 +387,7 @@ function CardComponent() {
                 <BottomText>금전 부적</BottomText>
             </CenterContainer>
             <ButtonComponent>
-                <CTAButton>앱 다운받고 부적 확인하기</CTAButton>
+                <CTAButton onClick={redireactApp}>앱 다운받고 부적 확인하기</CTAButton>
             </ButtonComponent>
         </>
     );
