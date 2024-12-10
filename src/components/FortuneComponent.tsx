@@ -86,6 +86,13 @@ const BubbleComponent = styled.div`
 `;
 
 const TextBubble = styled.div`
+    @media only screen and (max-width: 400px) {
+        height: 36.8px;
+        width: 228.8px;
+        padding-top: 16px;
+        font-size: 12.8px;
+        line-height: 12.8px;
+    }
     background-image: url(${text_bubble});
     background-size: cover;
     height: 46px;
@@ -102,6 +109,9 @@ const TextBubble = styled.div`
 `;
 
 const CenterContainer = styled.div`
+    @media only screen and (max-width: 400px) {
+        height: 378px;
+    }
     position: absolute;
     top: 126px;
     display: flex;
@@ -156,6 +166,10 @@ const fadeInCardImageComponet = keyframes`
 `;
 
 const CardImageComponet = styled.div`
+    @media only screen and (max-width: 400px) {
+        width: 217.6px;
+        height: 320px;
+    }
     width: 272px;
     height: 400px;
     transform-style: preserve-3d;
@@ -199,6 +213,11 @@ const CardBack = styled.div`
 `;
 
 const CardText = styled.div`
+    @media only screen and (max-width: 400px) {
+        padding: 0px 22.4px 0px 25.6px;
+        width: 169.6px;
+        height: 249.6px;
+    }
     display: flex;
     flex-direction: column;
     padding: 0px 28px 0px 32px;
@@ -207,6 +226,10 @@ const CardText = styled.div`
 `;
 
 const CardTitle = styled.div`
+    @media only screen and (max-width: 400px) {
+        font-size: 22.4px;
+        margin-bottom: 15.5px;
+    }
     color: var(--Gray-Scale-Gray800, #3a3a3c);
     font-family: Galmuri9;
     font-size: 28px;
@@ -218,12 +241,15 @@ const CardTitle = styled.div`
 `;
 
 const CardContext = styled.div`
+    @media only screen and (max-width: 400px) {
+        font-size: 12.8px;
+    }
     color: var(--Gray-Scale-Gray800, #3a3a3c);
     font-family: Pretendard;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: 26px; /* 162.5% */
+    line-height: 162.5%; /* 26px */
     letter-spacing: -0.4px;
 `;
 
@@ -239,6 +265,10 @@ const fadeInBottomText = keyframes`
 `;
 
 const BottomText = styled.div`
+    @media only screen and (max-width: 400px) {
+        font-size: 19.2px;
+        line-height: 27.2px;
+    }
     color: #ffffff;
     text-align: center;
     font-family: Pretendard;
@@ -247,7 +277,7 @@ const BottomText = styled.div`
     font-weight: 700;
     line-height: 34px; /* 100% */
     letter-spacing: -0.4px;
-    animation: ${fadeInBottomText} 0.6s ease-in-out 5.2s forwards;
+    animation: ${fadeInBottomText} 0.6s ease-in-out 0.6s forwards;
     opacity: 0;
     transform: translateY(50px) scale(0.7);
 `;
@@ -262,6 +292,9 @@ const fadeInButtonComponent = keyframes`
 `;
 
 const ButtonComponent = styled.div`
+    @media only screen and (max-width: 400px) {
+        bottom: 27.2px;
+    }
     position: absolute;
     bottom: 34px;
     display: flex;
@@ -273,6 +306,13 @@ const ButtonComponent = styled.div`
 `;
 
 const CTAButton = styled.div`
+    @media only screen and (max-width: 400px) {
+        height: 28.8px;
+        width: 274.4px;
+        padding-top: 16px;
+        font-size: 12.8px;
+        line-height: 12.8px;
+    }
     background-image: url(${CTA_button});
     background-size: cover;
     height: 36px;
@@ -338,7 +378,7 @@ function CardComponent() {
                 <BottomText>금전 부적</BottomText>
             </CenterContainer>
             <ButtonComponent>
-                <CTAButton>나도 부적 뽑기</CTAButton>
+                <CTAButton>앱 다운받고 부적 확인하기</CTAButton>
             </ButtonComponent>
         </>
     );
