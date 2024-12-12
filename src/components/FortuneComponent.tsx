@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Lottie from 'lottie-react';
+import { instance } from '../instance';
 import text_bubble from '../image/text_bubble.png';
-import secret_card from '../image/secret_card.png';
+import HEALTH_card from '../image/HEALTH_secret.png';
+import FRIENDSHIP_card from '../image/FRIENDSHIP_secret.png';
+import HAPPINESS_card from '../image/HAPPINESS_secret.png';
+import LIFE_card from '../image/LIFE_secret.png';
+import LOVE_card from '../image/LOVE_secret.png';
+import MONEY_card from '../image/MONEY_secret.png';
+import STUDY_card from '../image/STUDY_secret.png';
 import back_card from '../image/back_card.png';
 import CTA_button from '../image/CTA_button.png';
 import crystalball from '../image/crystalball.json';
@@ -187,8 +194,8 @@ const CardImageComponet = styled.div`
     }
 `;
 
-const CardFront = styled.div`
-    background-image: url(${secret_card});
+const CardFront = styled.div<{ fortuneData: any }>`
+    background-image: url(${(props) => props.fortuneData.category});
     background-size: cover;
     position: absolute;
     width: 100%;
@@ -331,6 +338,20 @@ const CTAButton = styled.div`
 function CardComponent() {
     const [flipped, setFlipped] = useState('');
     const [isHidden, setIsHidden] = useState('hidden');
+    const [fortuneData, setFortuneData] = useState<any>();
+
+    const fetchData = async () => {
+        try {
+            const response = await instance.get<any>('/api/v1/fortunes/web', {
+                withCredentials: true,
+            });
+            setFortuneData(response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            throw error;
+        }
+    };
 
     const redireactApp = () => {
         exeDeepLink();
@@ -342,6 +363,7 @@ function CardComponent() {
     }
 
     useEffect(() => {
+        fetchData();
         setTimeout(() => setIsHidden(''), 4600);
     }, []);
 
@@ -370,16 +392,11 @@ function CardComponent() {
             <CenterContainer className={isHidden}>
                 <CardContainer>
                     <CardImageComponet className={flipped} onClick={handleCardClick}>
-                        <CardFront />
+                        <CardFront fortuneData={fortuneData} />
                         <CardBack>
                             <CardText>
                                 <CardTitle>일이삼사오육칠</CardTitle>
-                                <CardContext>
-                                    여기저기서 재물의 획득이 있고 갖고 있던 물건을 좋은 가격에 팔 수 있는 기회입니다.
-                                    괜한 집착을 갖는 것은 오히려 발전하는데 걸림돌이 될 수 있습니다. 쓰지 않는 물건들을
-                                    중고시장에 정리해 보는 것은 어떨까요. 또한 로또는 집 근처보다는 회사 근처에서
-                                    퇴근길에 구매하는 것이 당첨 확률을 높여줄 것입니다. 발전적인 생각을 갖도록 하세요.
-                                </CardContext>
+                                <CardContext>${fortuneData.decription}</CardContext>
                             </CardText>
                         </CardBack>
                     </CardImageComponet>

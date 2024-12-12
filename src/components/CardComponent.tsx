@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { instance } from '../instance';
 import text_bubble from '../image/text_bubble.png';
-import secret_card from '../image/secret_card.png';
+import HEALTH_card from '../image/HEALTH_secret.png';
 import back_card from '../image/back_card.png';
 import CTA_button from '../image/CTA_button.png';
 
@@ -162,8 +162,20 @@ const CardImageComponet = styled.div`
     }
 `;
 
-const CardFront = styled.div`
-    background-image: url(${secret_card});
+const CardFront = styled.div<{ url: string }>`
+    background-image: url(${(props) => props.url});
+    background-size: cover;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backface-visibility: hidden;
+`;
+
+const CardFrontDefault = styled.div`
+    background-image: url(${HEALTH_card});
     background-size: cover;
     position: absolute;
     width: 100%;
@@ -306,13 +318,16 @@ const CTAButton = styled.div`
 function CardComponent(props: { onClickButton: () => void }) {
     const [flipped, setFlipped] = useState('');
     const [clicked, setClicked] = useState('');
+    const [id, setId] = useState('1');
+    const [url, setUrl] = useState('');
+    const [fortuneData, setFortuneData] = useState<any>();
 
     const fetchData = async () => {
         try {
-            const response = await instance.get('/api/v1/fortunes/web', {
+            const response = await instance.get('/api/v1/fortunes/' + id, {
                 withCredentials: true,
             });
-            console.log(response);
+            setFortuneData(response.data);
             return response.data;
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -335,6 +350,9 @@ function CardComponent(props: { onClickButton: () => void }) {
 
     useEffect(() => {
         fetchData();
+        const queryParams = new URLSearchParams(window.location.search);
+        setUrl(queryParams.get('imageUrl') || '');
+        setId(queryParams.get('fortuneId') || '1');
     }, []);
 
     return (
@@ -345,7 +363,7 @@ function CardComponent(props: { onClickButton: () => void }) {
             <CenterContainer>
                 <CardContainer>
                     <CardImageComponet className={flipped} onClick={handleCardClick}>
-                        <CardFront />
+                        {url === '' ? <CardFrontDefault /> : <CardFront url={url} />}
                         <CardBack>
                             <CardText>
                                 <CardTitle>일이삼사오육칠</CardTitle>
