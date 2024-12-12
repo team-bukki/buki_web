@@ -364,6 +364,7 @@ function CardComponent() {
 
     useEffect(() => {
         fetchData();
+        console.log(fortuneData);
         setTimeout(() => setIsHidden(''), 4600);
     }, []);
 
@@ -392,11 +393,11 @@ function CardComponent() {
             <CenterContainer className={isHidden}>
                 <CardContainer>
                     <CardImageComponet className={flipped} onClick={handleCardClick}>
-                        <CardFront fortuneData={fortuneData || 'HEALTH'} />
+                        <CardFront fortuneData={{ category: 'HEALTH' }} />
                         <CardBack>
                             <CardText>
                                 <CardTitle>일이삼사오육칠</CardTitle>
-                                <CardContext>{fortuneData.description || ''}</CardContext>
+                                <CardContext>aa</CardContext>
                             </CardText>
                         </CardBack>
                     </CardImageComponet>
