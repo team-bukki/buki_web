@@ -52,6 +52,9 @@ const shake = keyframes`
 `;
 
 const BubbleComponent = styled.div`
+    @media only screen and (max-width: 375px) {
+        top: 16px;
+    }
     position: absolute;
     top: 44px;
     display: flex;
@@ -64,7 +67,7 @@ const BubbleComponent = styled.div`
 `;
 
 const TextBubble = styled.div`
-    @media only screen and (max-width: 400px) {
+    @media only screen and (max-width: 375px) {
         height: 36.8px;
         width: 228.8px;
         padding-top: 16px;
@@ -87,8 +90,9 @@ const TextBubble = styled.div`
 `;
 
 const CenterContainer = styled.div`
-    @media only screen and (max-width: 400px) {
-        height: 378px;
+    @media only screen and (max-width: 375px) {
+        height: 342px;
+        top: 78.8px;
     }
     position: absolute;
     top: 126px;
@@ -141,9 +145,9 @@ const fadeInCardImageComponet = keyframes`
 `;
 
 const CardImageComponet = styled.div`
-    @media only screen and (max-width: 400px) {
-        width: 217.6px;
-        height: 320px;
+    @media only screen and (max-width: 375px) {
+        width: 204px;
+        height: 300px;
     }
     width: 272px;
     height: 400px;
@@ -200,10 +204,10 @@ const CardBack = styled.div`
 `;
 
 const CardText = styled.div`
-    @media only screen and (max-width: 400px) {
-        padding: 0px 22.4px 0px 25.6px;
-        width: 169.6px;
-        height: 249.6px;
+    @media only screen and (max-width: 375px) {
+        padding: 0px 22px 0px 24px;
+        width: 158px;
+        height: 244px;
     }
     display: flex;
     flex-direction: column;
@@ -213,9 +217,9 @@ const CardText = styled.div`
 `;
 
 const CardTitle = styled.div`
-    @media only screen and (max-width: 400px) {
-        font-size: 22.4px;
-        margin-bottom: 15.5px;
+    @media only screen and (max-width: 375px) {
+        font-size: 22px;
+        margin-bottom: 15px;
     }
     color: var(--Gray-Scale-Gray800, #3a3a3c);
     font-family: Galmuri9;
@@ -228,8 +232,10 @@ const CardTitle = styled.div`
 `;
 
 const CardContext = styled.div`
-    @media only screen and (max-width: 400px) {
-        font-size: 12.8px;
+    @media only screen and (max-width: 375px) {
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: -0.3px;
     }
     color: var(--Gray-Scale-Gray800, #3a3a3c);
     font-family: Pretendard;
@@ -252,9 +258,9 @@ const fadeInBottomText = keyframes`
 `;
 
 const BottomText = styled.div`
-    @media only screen and (max-width: 400px) {
-        font-size: 19.2px;
-        line-height: 27.2px;
+    @media only screen and (max-width: 375px) {
+        font-size: 20px;
+        line-height: 30px;
     }
     color: #ffffff;
     text-align: center;
@@ -279,7 +285,7 @@ const fadeInButtonComponent = keyframes`
 `;
 
 const ButtonComponent = styled.div`
-    @media only screen and (max-width: 400px) {
+    @media only screen and (max-width: 375px) {
         bottom: 27.2px;
     }
     position: absolute;
@@ -293,7 +299,7 @@ const ButtonComponent = styled.div`
 `;
 
 const CTAButton = styled.div`
-    @media only screen and (max-width: 400px) {
+    @media only screen and (max-width: 375px) {
         height: 28.8px;
         width: 274.4px;
         padding-top: 16px;
@@ -320,7 +326,9 @@ function CardComponent(props: { onClickButton: () => void }) {
     const [clicked, setClicked] = useState('');
     const [id, setId] = useState('1');
     const [url, setUrl] = useState('');
-    const [fortuneData, setFortuneData] = useState<any>();
+    const [fortuneData, setFortuneData] = useState<any>({
+        data: { id: 1, category: 'HEALTH', score: 100, description: '' },
+    });
 
     const fetchData = async () => {
         try {
@@ -349,10 +357,10 @@ function CardComponent(props: { onClickButton: () => void }) {
     };
 
     useEffect(() => {
-        fetchData();
         const queryParams = new URLSearchParams(window.location.search);
         setUrl(queryParams.get('imageUrl') || '');
         setId(queryParams.get('fortuneId') || '1');
+        fetchData();
     }, []);
 
     return (
@@ -367,12 +375,7 @@ function CardComponent(props: { onClickButton: () => void }) {
                         <CardBack>
                             <CardText>
                                 <CardTitle>일이삼사오육칠</CardTitle>
-                                <CardContext>
-                                    여기저기서 재물의 획득이 있고 갖고 있던 물건을 좋은 가격에 팔 수 있는 기회입니다.
-                                    괜한 집착을 갖는 것은 오히려 발전하는데 걸림돌이 될 수 있습니다. 쓰지 않는 물건들을
-                                    중고시장에 정리해 보는 것은 어떨까요. 또한 로또는 집 근처보다는 회사 근처에서
-                                    퇴근길에 구매하는 것이 당첨 확률을 높여줄 것입니다. 발전적인 생각을 갖도록 하세요.
-                                </CardContext>
+                                <CardContext>{fortuneData.data.description}</CardContext>
                             </CardText>
                         </CardBack>
                     </CardImageComponet>

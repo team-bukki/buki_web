@@ -3,13 +3,6 @@ import styled, { keyframes } from 'styled-components';
 import Lottie from 'lottie-react';
 import { instance } from '../instance';
 import text_bubble from '../image/text_bubble.png';
-import HEALTH_card from '../image/HEALTH_secret.png';
-import FRIENDSHIP_card from '../image/FRIENDSHIP_secret.png';
-import HAPPINESS_card from '../image/HAPPINESS_secret.png';
-import LIFE_card from '../image/LIFE_secret.png';
-import LOVE_card from '../image/LOVE_secret.png';
-import MONEY_card from '../image/MONEY_secret.png';
-import STUDY_card from '../image/STUDY_secret.png';
 import back_card from '../image/back_card.png';
 import CTA_button from '../image/CTA_button.png';
 import crystalball from '../image/crystalball.json';
@@ -81,6 +74,9 @@ const shake = keyframes`
 `;
 
 const BubbleComponent = styled.div`
+    @media only screen and (max-width: 375px) {
+        top: 16px;
+    }
     position: absolute;
     top: 44px;
     display: flex;
@@ -93,7 +89,7 @@ const BubbleComponent = styled.div`
 `;
 
 const TextBubble = styled.div`
-    @media only screen and (max-width: 400px) {
+    @media only screen and (max-width: 375px) {
         height: 36.8px;
         width: 228.8px;
         padding-top: 16px;
@@ -116,8 +112,9 @@ const TextBubble = styled.div`
 `;
 
 const CenterContainer = styled.div`
-    @media only screen and (max-width: 400px) {
-        height: 378px;
+    @media only screen and (max-width: 375px) {
+        height: 342px;
+        top: 78.8px;
     }
     position: absolute;
     top: 126px;
@@ -173,9 +170,9 @@ const fadeInCardImageComponet = keyframes`
 `;
 
 const CardImageComponet = styled.div`
-    @media only screen and (max-width: 400px) {
-        width: 217.6px;
-        height: 320px;
+    @media only screen and (max-width: 375px) {
+        width: 204px;
+        height: 300px;
     }
     width: 272px;
     height: 400px;
@@ -195,7 +192,7 @@ const CardImageComponet = styled.div`
 `;
 
 const CardFront = styled.div<{ fortuneData: any }>`
-    background-image: url(${(props) => props.fortuneData.category});
+    background-image: url(image/${(props) => props.fortuneData}_secret.png);
     background-size: cover;
     position: absolute;
     width: 100%;
@@ -220,10 +217,10 @@ const CardBack = styled.div`
 `;
 
 const CardText = styled.div`
-    @media only screen and (max-width: 400px) {
-        padding: 0px 22.4px 0px 25.6px;
-        width: 169.6px;
-        height: 249.6px;
+    @media only screen and (max-width: 375px) {
+        padding: 0px 22px 0px 24px;
+        width: 158px;
+        height: 244px;
     }
     display: flex;
     flex-direction: column;
@@ -233,9 +230,9 @@ const CardText = styled.div`
 `;
 
 const CardTitle = styled.div`
-    @media only screen and (max-width: 400px) {
-        font-size: 22.4px;
-        margin-bottom: 15.5px;
+    @media only screen and (max-width: 375px) {
+        font-size: 22px;
+        margin-bottom: 15px;
     }
     color: var(--Gray-Scale-Gray800, #3a3a3c);
     font-family: Galmuri9;
@@ -248,8 +245,10 @@ const CardTitle = styled.div`
 `;
 
 const CardContext = styled.div`
-    @media only screen and (max-width: 400px) {
-        font-size: 12.8px;
+    @media only screen and (max-width: 375px) {
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: -0.3px;
     }
     color: var(--Gray-Scale-Gray800, #3a3a3c);
     font-family: Pretendard;
@@ -272,9 +271,9 @@ const fadeInBottomText = keyframes`
 `;
 
 const BottomText = styled.div`
-    @media only screen and (max-width: 400px) {
-        font-size: 19.2px;
-        line-height: 27.2px;
+    @media only screen and (max-width: 375px) {
+        font-size: 20px;
+        line-height: 30px;
     }
     color: #ffffff;
     text-align: center;
@@ -299,7 +298,7 @@ const fadeInButtonComponent = keyframes`
 `;
 
 const ButtonComponent = styled.div`
-    @media only screen and (max-width: 400px) {
+    @media only screen and (max-width: 375px) {
         bottom: 27.2px;
     }
     position: absolute;
@@ -338,7 +337,9 @@ const CTAButton = styled.div`
 function CardComponent() {
     const [flipped, setFlipped] = useState('');
     const [isHidden, setIsHidden] = useState('hidden');
-    const [fortuneData, setFortuneData] = useState<any>();
+    const [fortuneData, setFortuneData] = useState<any>({
+        data: { id: 1, category: 'HEALTH', score: 100, description: '' },
+    });
 
     const fetchData = async () => {
         try {
@@ -364,7 +365,6 @@ function CardComponent() {
 
     useEffect(() => {
         fetchData();
-        console.log(fortuneData);
         setTimeout(() => setIsHidden(''), 4600);
     }, []);
 
@@ -393,11 +393,11 @@ function CardComponent() {
             <CenterContainer className={isHidden}>
                 <CardContainer>
                     <CardImageComponet className={flipped} onClick={handleCardClick}>
-                        <CardFront fortuneData={{ category: 'HEALTH' }} />
+                        <CardFront fortuneData={fortuneData.data.category} />
                         <CardBack>
                             <CardText>
                                 <CardTitle>일이삼사오육칠</CardTitle>
-                                <CardContext>aa</CardContext>
+                                <CardContext>{fortuneData.data.description}</CardContext>
                             </CardText>
                         </CardBack>
                     </CardImageComponet>
