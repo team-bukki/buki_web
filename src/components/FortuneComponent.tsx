@@ -392,11 +392,11 @@ function CardComponent() {
             <CenterContainer className={isHidden}>
                 <CardContainer>
                     <CardImageComponet className={flipped} onClick={handleCardClick}>
-                        <CardFront fortuneData={fortuneData} />
+                        <CardFront fortuneData={fortuneData || 'HEALTH'} />
                         <CardBack>
                             <CardText>
                                 <CardTitle>일이삼사오육칠</CardTitle>
-                                <CardContext>${fortuneData.description}</CardContext>
+                                <CardContext>{fortuneData.description || ''}</CardContext>
                             </CardText>
                         </CardBack>
                     </CardImageComponet>
