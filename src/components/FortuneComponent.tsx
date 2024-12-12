@@ -396,7 +396,7 @@ function CardComponent() {
                         <CardBack>
                             <CardText>
                                 <CardTitle>일이삼사오육칠</CardTitle>
-                                <CardContext>${fortuneData.decription}</CardContext>
+                                <CardContext>${fortuneData.description}</CardContext>
                             </CardText>
                         </CardBack>
                     </CardImageComponet>
