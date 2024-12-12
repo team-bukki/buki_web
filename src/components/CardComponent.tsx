@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
+import { instance } from '../instance';
 import text_bubble from '../image/text_bubble.png';
 import secret_card from '../image/secret_card.png';
 import back_card from '../image/back_card.png';
@@ -306,6 +307,19 @@ function CardComponent(props: { onClickButton: () => void }) {
     const [flipped, setFlipped] = useState('');
     const [clicked, setClicked] = useState('');
 
+    const fetchData = async () => {
+        try {
+            const response = await instance.get('/api/v1/fortunes/web', {
+                withCredentials: true,
+            });
+            console.log(response);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            throw error;
+        }
+    };
+
     const onClickButtonFunc = () => {
         setClicked('click');
         props.onClickButton();
@@ -318,6 +332,10 @@ function CardComponent(props: { onClickButton: () => void }) {
             setFlipped('unFlipped');
         }
     };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <FadeOutContainer className={clicked}>

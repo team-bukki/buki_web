@@ -4,7 +4,7 @@ module.exports = function (app) {
     app.use(
         '/api/v1',
         createProxyMiddleware({
-            target: 'https://suker.iptime.org',
+            target: 'https://buki-api.shop',
             changeOrigin: true,
         })
     );
