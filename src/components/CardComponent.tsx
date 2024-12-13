@@ -369,7 +369,7 @@ function CardComponent(props: { onClickButton: () => void }) {
         setId(queryParams.get('fortuneId') || '1');
         fetchData();
         preloading([url, HEALTH_card]);
-    }, [fetchData, url]);
+    }, []);
 
     return (
         <FadeOutContainer className={clicked}>

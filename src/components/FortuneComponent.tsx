@@ -344,7 +344,6 @@ function CardComponent() {
     function preloading(imageUrl: string) {
         const image = new Image();
         image.src = imageUrl;
-        console.log(image);
     }
 
     const fetchData = async () => {
@@ -375,7 +374,7 @@ function CardComponent() {
     useEffect(() => {
         fetchData();
         setTimeout(() => setIsHidden(''), 4600);
-    }, [fetchData]);
+    }, []);
 
     const handleCardClick = () => {
         if (!flipped || flipped === 'unFlipped') {
