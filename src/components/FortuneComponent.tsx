@@ -344,6 +344,7 @@ function CardComponent() {
     function preloading(imageUrl: string) {
         const image = new Image();
         image.src = imageUrl;
+        console.log(image);
     }
 
     const fetchData = async () => {
@@ -352,8 +353,8 @@ function CardComponent() {
                 withCredentials: true,
             });
             setFortuneData(response.data);
-            if (response.data.category) {
-                preloading('image/' + response.data.category + '_secret.png');
+            if (response.data.data.category) {
+                preloading('image/' + response.data.data.category + '_secret.png');
             }
             return response.data;
         } catch (error) {
@@ -374,7 +375,7 @@ function CardComponent() {
     useEffect(() => {
         fetchData();
         setTimeout(() => setIsHidden(''), 4600);
-    }, []);
+    }, [fetchData]);
 
     const handleCardClick = () => {
         if (!flipped || flipped === 'unFlipped') {
