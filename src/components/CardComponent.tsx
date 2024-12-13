@@ -61,7 +61,7 @@ const BubbleComponent = styled.div`
     justify-content: center;
     align-items: center;
     width: 100vw;
-    animation: ${fadeInBubbleComponent} 0.45s ease-in-out 1.2s forwards, ${shake} 1s ease-in-out 1.65s infinite;
+    animation: ${fadeInBubbleComponent} 0.45s ease-in-out 1.8s forwards, ${shake} 1s ease-in-out 2.25s infinite;
     opacity: 0;
     transform: translateY(10px);
 `;
@@ -153,7 +153,7 @@ const CardImageComponet = styled.div`
     height: 400px;
     transform-style: preserve-3d;
     transition: transform 0.6s;
-    animation: ${fadeInCardImageComponet} 0.6s ease-in-out forwards;
+    animation: ${fadeInCardImageComponet} 0.6s ease-in-out 0.6s forwards;
     opacity: 0;
     transform: translateY(40px);
     &.flipped {
@@ -270,7 +270,7 @@ const BottomText = styled.div`
     font-weight: 700;
     line-height: 34px; /* 100% */
     letter-spacing: -0.4px;
-    animation: ${fadeInBottomText} 0.6s ease-in-out 0.6s forwards;
+    animation: ${fadeInBottomText} 0.6s ease-in-out 1.2s forwards;
     opacity: 0;
     transform: translateY(50px) scale(0.7);
 `;
@@ -294,7 +294,7 @@ const ButtonComponent = styled.div`
     justify-content: center;
     align-items: center;
     width: 100vw;
-    animation: ${fadeInButtonComponent} 0.45s ease-in-out 1.65s forwards;
+    animation: ${fadeInButtonComponent} 0.45s ease-in-out 2.25s forwards;
     transform: translateY(90px);
 `;
 
@@ -330,6 +330,13 @@ function CardComponent(props: { onClickButton: () => void }) {
         data: { id: 1, category: 'HEALTH', score: 100, description: '' },
     });
 
+    function preloading(imageUrls: string[]) {
+        imageUrls.forEach((url) => {
+            const image = new Image();
+            image.src = url;
+        });
+    }
+
     const fetchData = async () => {
         try {
             const response = await instance.get('/api/v1/fortunes/' + id, {
@@ -361,6 +368,7 @@ function CardComponent(props: { onClickButton: () => void }) {
         setUrl(queryParams.get('imageUrl') || '');
         setId(queryParams.get('fortuneId') || '1');
         fetchData();
+        preloading([url, HEALTH_card]);
     }, []);
 
     return (

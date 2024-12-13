@@ -191,8 +191,8 @@ const CardImageComponet = styled.div`
     }
 `;
 
-const CardFront = styled.div<{ fortuneData: any }>`
-    background-image: url(image/${(props) => props.fortuneData}_secret.png);
+const CardFront = styled.div<{ $fortunedata: any }>`
+    background-image: url(image/${(props) => props.$fortunedata}_secret.png);
     background-size: cover;
     position: absolute;
     width: 100%;
@@ -341,12 +341,20 @@ function CardComponent() {
         data: { id: 1, category: 'HEALTH', score: 100, description: '' },
     });
 
+    function preloading(imageUrl: string) {
+        const image = new Image();
+        image.src = imageUrl;
+    }
+
     const fetchData = async () => {
         try {
             const response = await instance.get<any>('/api/v1/fortunes/web', {
                 withCredentials: true,
             });
             setFortuneData(response.data);
+            if (response.data.category) {
+                preloading('image/' + response.data.category + '_secret.png');
+            }
             return response.data;
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -393,7 +401,7 @@ function CardComponent() {
             <CenterContainer className={isHidden}>
                 <CardContainer>
                     <CardImageComponet className={flipped} onClick={handleCardClick}>
-                        <CardFront fortuneData={fortuneData.data.category} />
+                        <CardFront $fortunedata={fortuneData.data.category} />
                         <CardBack>
                             <CardText>
                                 <CardTitle>일이삼사오육칠</CardTitle>
