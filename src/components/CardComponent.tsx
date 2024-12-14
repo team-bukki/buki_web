@@ -68,18 +68,123 @@ const BubbleComponent = styled.div`
 
 const TextBubble = styled.div`
     @media only screen and (max-width: 375px) {
-        height: 36.8px;
+        height: 53px;
         width: 228.8px;
-        padding-top: 16px;
         font-size: 12.8px;
         line-height: 12.8px;
     }
     background-image: url(${text_bubble});
     background-size: cover;
-    height: 46px;
+    height: 66px;
     width: 286px;
-    padding-top: 20px;
+`;
+
+const fadeOutTextBubbleContainer = keyframes`
+  0% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(10px);
+    display: none
+  }
+`;
+
+const TextBubbleContainer = styled.div`
+    @media only screen and (max-width: 375px) {
+        height: 32.9px;
+        width: 228.8px;
+        font-size: 12.8px;
+        line-height: 12.8px;
+        margin-top: 6.4px;
+    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 9.5px;
+    height: 40px;
+    width: 286px;
     color: var(--Gray-Scale-Gray900, #1c1c1e);
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: -0.4px;
+    &.changeText {
+        animation: ${fadeOutTextBubbleContainer} 0.6s ease-in-out forwards;
+    }
+`;
+
+const fadeInScoreComponenet = keyframes`
+  0% {
+    opacity: 0;
+    visibility: visible;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0px);
+  }
+`;
+
+const ScoreComponenet = styled.div`
+    @media only screen and (max-width: 375px) {
+        height: 32.9px;
+        width: 228.8px;
+        font-size: 12.8px;
+        line-height: 12.8px;
+        margin-top: 6.4px;
+    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 9.5px;
+    height: 40px;
+    width: 286px;
+    visibility: hidden;
+    &.changeText {
+        animation: ${fadeInScoreComponenet} 0.6s ease-in-out 0.65s forwards;
+    }
+`;
+
+const ScoreImage = styled.div`
+    @media only screen and (max-width: 375px) {
+        height: 24px;
+        width: 24px;
+        margin-right: 3.2px;
+    }
+    height: 30px;
+    width: 30px;
+    margin-right: 4px;
+    background-image: url(image/stamp_80.png);
+    background-size: cover;
+`;
+
+const ScoreText = styled.div`
+    @media only screen and (max-width: 375px) {
+        font-size: 12.8px;
+        line-height: 12.8px;
+    }
+    color: var(--Gray-Scale-Gray900, #1c1c1e);
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: -0.4px;
+`;
+
+const ScoreNum = styled.div`
+    @media only screen and (max-width: 375px) {
+        font-size: 12.8px;
+        line-height: 12.8px;
+    }
+    color: var(--Semantic-Colors-Blue, #007aff);
     text-align: center;
     font-family: Pretendard;
     font-size: 16px;
@@ -102,6 +207,7 @@ const CenterContainer = styled.div`
     width: 100vw;
     height: 458px;
 `;
+
 const CardContainer = styled.div`
     perspective: 1000px;
     display: flex;
@@ -324,6 +430,7 @@ const CTAButton = styled.div`
 function CardComponent(props: { onClickButton: () => void }) {
     const [flipped, setFlipped] = useState('');
     const [clicked, setClicked] = useState('');
+    const [changeText, setChangeText] = useState('');
     const [id, setId] = useState('1');
     const [url, setUrl] = useState('');
     const [fortuneData, setFortuneData] = useState<any>({
@@ -356,6 +463,7 @@ function CardComponent(props: { onClickButton: () => void }) {
     };
 
     const handleCardClick = () => {
+        setChangeText('changeText');
         if (!flipped || flipped === 'unFlipped') {
             setFlipped('flipped');
         } else {
@@ -374,7 +482,15 @@ function CardComponent(props: { onClickButton: () => void }) {
     return (
         <FadeOutContainer className={clicked}>
             <BubbleComponent>
-                <TextBubble>뒤집어서 운세를 확인해주세요~</TextBubble>
+                <TextBubble>
+                    <TextBubbleContainer className={changeText}>뒤집어서 운세를 확인해주세요~</TextBubbleContainer>
+                    <ScoreComponenet className={changeText}>
+                        <ScoreImage />
+                        <ScoreText>오늘의 행운 지수는&nbsp;</ScoreText>
+                        <ScoreNum>{fortuneData.data.score}</ScoreNum>
+                        <ScoreText>!</ScoreText>
+                    </ScoreComponenet>
+                </TextBubble>
             </BubbleComponent>
             <CenterContainer>
                 <CardContainer>

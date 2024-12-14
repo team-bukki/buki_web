@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Lottie from 'lottie-react';
+import WaveTextComponent from './WaveTextComponent';
+import ToastComponent from './ToastComponenet';
 import { instance } from '../instance';
 import text_bubble from '../image/text_bubble.png';
 import back_card from '../image/back_card.png';
@@ -28,20 +30,12 @@ const LottieContainer = styled.div`
 
 const LottieComponent = styled.div`
     width: 275px;
-    height: 355px;
+    height: 365px;
 `;
 
-const LottieText = styled.div`
+const LottieFix = styled.div`
     width: 275px;
-    height: 80px;
-    color: #ffffff;
-    text-align: center;
-    font-family: Pretendard;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 34px;
-    letter-spacing: -0.4px;
+    height: 275px;
 `;
 
 const fadeInBubbleComponent = keyframes`
@@ -90,17 +84,107 @@ const BubbleComponent = styled.div`
 
 const TextBubble = styled.div`
     @media only screen and (max-width: 375px) {
-        height: 36.8px;
+        height: 53px;
         width: 228.8px;
-        padding-top: 16px;
         font-size: 12.8px;
         line-height: 12.8px;
     }
     background-image: url(${text_bubble});
     background-size: cover;
-    height: 46px;
+    height: 66px;
     width: 286px;
-    padding-top: 20px;
+`;
+
+const fadeOutTextBubbleContainer = keyframes`
+  0% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(10px);
+    display: none
+  }
+`;
+
+const TextBubbleContainer = styled.div`
+    @media only screen and (max-width: 375px) {
+        height: 32.9px;
+        width: 228.8px;
+        font-size: 12.8px;
+        line-height: 12.8px;
+        margin-top: 6.4px;
+    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 9.5px;
+    height: 40px;
+    width: 286px;
+    color: var(--Gray-Scale-Gray900, #1c1c1e);
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: -0.4px;
+    &.changeText {
+        animation: ${fadeOutTextBubbleContainer} 0.6s ease-in-out forwards;
+    }
+`;
+
+const fadeInScoreComponenet = keyframes`
+  0% {
+    opacity: 0;
+    visibility: visible;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0px);
+  }
+`;
+
+const ScoreComponenet = styled.div`
+    @media only screen and (max-width: 375px) {
+        height: 32.9px;
+        width: 228.8px;
+        font-size: 12.8px;
+        line-height: 12.8px;
+        margin-top: 6.4px;
+    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 9.5px;
+    height: 40px;
+    width: 286px;
+    visibility: hidden;
+    &.changeText {
+        animation: ${fadeInScoreComponenet} 0.6s ease-in-out 0.65s forwards;
+    }
+`;
+
+const ScoreImage = styled.div`
+    @media only screen and (max-width: 375px) {
+        height: 24px;
+        width: 24px;
+        margin-right: 3.2px;
+    }
+    height: 30px;
+    width: 30px;
+    margin-right: 4px;
+    background-image: url(image/stamp_80.png);
+    background-size: cover;
+`;
+
+const ScoreText = styled.div`
+    @media only screen and (max-width: 375px) {
+        font-size: 12.8px;
+        line-height: 12.8px;
+    }
     color: var(--Gray-Scale-Gray900, #1c1c1e);
     text-align: center;
     font-family: Pretendard;
@@ -111,6 +195,20 @@ const TextBubble = styled.div`
     letter-spacing: -0.4px;
 `;
 
+const ScoreNum = styled.div`
+    @media only screen and (max-width: 375px) {
+        font-size: 12.8px;
+        line-height: 12.8px;
+    }
+    color: var(--Semantic-Colors-Blue, #007aff);
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: -0.4px;
+`;
 const CenterContainer = styled.div`
     @media only screen and (max-width: 375px) {
         height: 342px;
@@ -337,9 +435,11 @@ const CTAButton = styled.div`
 function CardComponent() {
     const [flipped, setFlipped] = useState('');
     const [isHidden, setIsHidden] = useState('hidden');
+    const [changeText, setChangeText] = useState('');
     const [fortuneData, setFortuneData] = useState<any>({
         data: { id: 1, category: 'HEALTH', score: 100, description: '' },
     });
+    const [toasts, setToasts] = useState<string>('');
 
     function preloading(imageUrl: string) {
         const image = new Image();
@@ -367,8 +467,16 @@ function CardComponent() {
     };
 
     function exeDeepLink() {
-        const url = 'coin.buki://';
-        window.location.href = url;
+        const userAgent = navigator.userAgent.toLowerCase();
+        if (userAgent.search('iphone') > -1 || userAgent.search('ipad') > -1 || userAgent.search('ipot') > -1) {
+            const url = 'coin.buki://';
+            window.location.href = url;
+        } else if (toasts === '') {
+            setToasts('안드로이드는 아직 지원하지 않아요 조금만 기다려주세요!');
+            setTimeout(() => {
+                setToasts('');
+            }, 2500);
+        }
     }
 
     useEffect(() => {
@@ -377,6 +485,7 @@ function CardComponent() {
     }, []);
 
     const handleCardClick = () => {
+        setChangeText('changeText');
         if (!flipped || flipped === 'unFlipped') {
             setFlipped('flipped');
         } else {
@@ -388,15 +497,22 @@ function CardComponent() {
         <>
             <LottieContainer>
                 <LottieComponent>
-                    <Lottie animationData={crystalball} />
-                    <LottieText>
-                        두근두근...
-                        <br /> 무슨 부적이 나올까?
-                    </LottieText>
+                    <LottieFix>
+                        <Lottie animationData={crystalball} />
+                    </LottieFix>
+                    <WaveTextComponent text="두근두근...enter무슨 부적이 나올까?" />
                 </LottieComponent>
             </LottieContainer>
             <BubbleComponent>
-                <TextBubble>뒤집어서 운세를 확인해주세요~</TextBubble>
+                <TextBubble>
+                    <TextBubbleContainer className={changeText}>뒤집어서 운세를 확인해주세요~</TextBubbleContainer>
+                    <ScoreComponenet className={changeText}>
+                        <ScoreImage />
+                        <ScoreText>오늘의 행운 지수는&nbsp;</ScoreText>
+                        <ScoreNum>{fortuneData.data.score}</ScoreNum>
+                        <ScoreText>!</ScoreText>
+                    </ScoreComponenet>
+                </TextBubble>
             </BubbleComponent>
             <CenterContainer className={isHidden}>
                 <CardContainer>
@@ -415,6 +531,7 @@ function CardComponent() {
             <ButtonComponent>
                 <CTAButton onClick={redireactApp}>앱 다운받고 부적 확인하기</CTAButton>
             </ButtonComponent>
+            <ToastComponent message={toasts} />
         </>
     );
 }
