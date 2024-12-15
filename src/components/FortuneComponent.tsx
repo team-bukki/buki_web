@@ -436,8 +436,8 @@ function CardComponent() {
     const [flipped, setFlipped] = useState('');
     const [isHidden, setIsHidden] = useState('hidden');
     const [changeText, setChangeText] = useState('');
-    const [scoreRangeText, setScoreRangeText] = useState('만땅!');
-    const [fortuneCategory, setFortuneCategory] = useState('건강운');
+    const [scoreRangeText, setScoreRangeText] = useState(['운 만땅!', '_lovely']);
+    const [fortuneCategory, setFortuneCategory] = useState('건강');
     const [fortuneData, setFortuneData] = useState<any>({
         data: { id: 1, category: 'HEALTH', score: 100, description: '' },
     });
@@ -450,15 +450,15 @@ function CardComponent() {
 
     function setScoreText(score: number) {
         if (score === 100) {
-            setScoreRangeText('운 만땅!');
+            setScoreRangeText(['운 만땅!', '_lovely']);
         } else if (score > 85) {
-            setScoreRangeText('운 상승');
+            setScoreRangeText(['운 상승', '_joy']);
         } else if (score > 69) {
-            setScoreRangeText('운 안정');
+            setScoreRangeText(['운 안정', '_smile']);
         } else if (score > 49) {
-            setScoreRangeText('운 보통');
+            setScoreRangeText(['운 보통', '_default']);
         } else {
-            setScoreRangeText('운 상태 미확인인');
+            setScoreRangeText(['운 상태 미확인', '_default']);
         }
     }
 
@@ -553,7 +553,11 @@ function CardComponent() {
                 <TextBubble>
                     <TextBubbleContainer className={changeText}>뒤집어서 운세를 확인해주세요~</TextBubbleContainer>
                     <ScoreComponenet className={changeText}>
-                        <ScoreImage />
+                        <ScoreImage>
+                            <Lottie
+                                animationData={require('../image/' + fortuneData.data.category + scoreRangeText[1])}
+                            />
+                        </ScoreImage>
                         <ScoreText>오늘의 행운 지수는&nbsp;</ScoreText>
                         <ScoreNum>{fortuneData.data.score}</ScoreNum>
                         <ScoreText>!</ScoreText>
@@ -568,7 +572,7 @@ function CardComponent() {
                             <CardText>
                                 <CardTitle>
                                     {fortuneCategory}
-                                    {scoreRangeText}
+                                    {scoreRangeText[0]}
                                 </CardTitle>
                                 <CardContext>{fortuneData.data.description}</CardContext>
                             </CardText>

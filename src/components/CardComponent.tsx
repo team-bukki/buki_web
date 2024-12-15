@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
+import Lottie from 'lottie-react';
 import { instance } from '../instance';
 import text_bubble from '../image/text_bubble.png';
 import HEALTH_card from '../image/HEALTH_secret.png';
@@ -160,8 +161,6 @@ const ScoreImage = styled.div`
     height: 30px;
     width: 30px;
     margin-right: 4px;
-    background-image: url(image/stamp_80.png);
-    background-size: cover;
 `;
 
 const ScoreText = styled.div`
@@ -431,9 +430,9 @@ function CardComponent(props: { onClickButton: () => void }) {
     const [flipped, setFlipped] = useState('');
     const [clicked, setClicked] = useState('');
     const [changeText, setChangeText] = useState('');
-    const [id, setId] = useState('1');
     const [url, setUrl] = useState('');
-    const [scoreRangeText, setScoreRangeText] = useState('운 만땅!');
+    const [scoreNumber, setScoreNumber] = useState('100');
+    const [scoreRangeText, setScoreRangeText] = useState(['운 만땅!', '_lovely']);
     const [fortuneCategory, setFortuneCategory] = useState('건강');
     const [fortuneData, setFortuneData] = useState<any>({
         data: { id: 1, category: 'HEALTH', score: 100, description: '' },
@@ -448,15 +447,15 @@ function CardComponent(props: { onClickButton: () => void }) {
 
     function setScoreText(score: number) {
         if (score === 100) {
-            setScoreRangeText('운 만땅!');
+            setScoreRangeText(['운 만땅!', '_lovely']);
         } else if (score > 85) {
-            setScoreRangeText('운 상승');
+            setScoreRangeText(['운 상승', '_joy']);
         } else if (score > 69) {
-            setScoreRangeText('운 안정');
+            setScoreRangeText(['운 안정', '_smile']);
         } else if (score > 49) {
-            setScoreRangeText('운 보통');
+            setScoreRangeText(['운 보통', '_default']);
         } else {
-            setScoreRangeText('운 상태 미확인인');
+            setScoreRangeText(['운 상태 미확인', '_default']);
         }
     }
 
@@ -480,13 +479,14 @@ function CardComponent(props: { onClickButton: () => void }) {
         }
     }
 
-    const fetchData = async () => {
+    const fetchData = async (id: string, score: string) => {
         try {
             const response = await instance.get('/api/v1/fortunes/' + id, {
                 withCredentials: true,
             });
             setFortuneData(response.data);
-            setScoreText(Number(response.data.data.score));
+            setScoreText(Number(score));
+            setScoreNumber(score);
             setCategortText(response.data.data.category);
             return response.data;
         } catch (error) {
@@ -512,8 +512,7 @@ function CardComponent(props: { onClickButton: () => void }) {
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
         setUrl(queryParams.get('imageUrl') || '');
-        setId(queryParams.get('fortuneId') || '1');
-        fetchData();
+        fetchData(queryParams.get('fortuneId') || '1', queryParams.get('fortuneScore') || '100');
         preloading([url, HEALTH_card]);
     }, []);
 
@@ -523,9 +522,13 @@ function CardComponent(props: { onClickButton: () => void }) {
                 <TextBubble>
                     <TextBubbleContainer className={changeText}>뒤집어서 운세를 확인해주세요~</TextBubbleContainer>
                     <ScoreComponenet className={changeText}>
-                        <ScoreImage />
+                        <ScoreImage>
+                            <Lottie
+                                animationData={require('../image/' + fortuneData.data.category + scoreRangeText[1])}
+                            />
+                        </ScoreImage>
                         <ScoreText>오늘의 행운 지수는&nbsp;</ScoreText>
-                        <ScoreNum>{fortuneData.data.score}</ScoreNum>
+                        <ScoreNum>{scoreNumber}</ScoreNum>
                         <ScoreText>!</ScoreText>
                     </ScoreComponenet>
                 </TextBubble>
@@ -538,7 +541,7 @@ function CardComponent(props: { onClickButton: () => void }) {
                             <CardText>
                                 <CardTitle>
                                     {fortuneCategory}
-                                    {scoreRangeText}
+                                    {scoreRangeText[0]}
                                 </CardTitle>
                                 <CardContext>{fortuneData.data.description}</CardContext>
                             </CardText>
