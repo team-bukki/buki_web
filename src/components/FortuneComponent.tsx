@@ -176,8 +176,6 @@ const ScoreImage = styled.div`
     height: 30px;
     width: 30px;
     margin-right: 4px;
-    background-image: url(image/stamp_80.png);
-    background-size: cover;
 `;
 
 const ScoreText = styled.div`
