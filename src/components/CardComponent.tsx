@@ -433,6 +433,8 @@ function CardComponent(props: { onClickButton: () => void }) {
     const [changeText, setChangeText] = useState('');
     const [id, setId] = useState('1');
     const [url, setUrl] = useState('');
+    const [scoreRangeText, setScoreRangeText] = useState('운 만땅!');
+    const [fortuneCategory, setFortuneCategory] = useState('건강');
     const [fortuneData, setFortuneData] = useState<any>({
         data: { id: 1, category: 'HEALTH', score: 100, description: '' },
     });
@@ -444,12 +446,48 @@ function CardComponent(props: { onClickButton: () => void }) {
         });
     }
 
+    function setScoreText(score: number) {
+        if (score === 100) {
+            setScoreRangeText('운 만땅!');
+        } else if (score > 85) {
+            setScoreRangeText('운 상승');
+        } else if (score > 69) {
+            setScoreRangeText('운 안정');
+        } else if (score > 49) {
+            setScoreRangeText('운 보통');
+        } else {
+            setScoreRangeText('운 상태 미확인인');
+        }
+    }
+
+    function setCategortText(category: string) {
+        if (category === 'FRIENDSHIP') {
+            setFortuneCategory('우정');
+        } else if (category === 'HAPPINESS') {
+            setFortuneCategory('행복');
+        } else if (category === 'HEALTH') {
+            setFortuneCategory('건강');
+        } else if (category === 'LIFE') {
+            setFortuneCategory('갓생');
+        } else if (category === 'LOVE') {
+            setFortuneCategory('연애');
+        } else if (category === 'MONEY') {
+            setFortuneCategory('금전');
+        } else if (category === 'STUDY') {
+            setFortuneCategory('공부');
+        } else {
+            setFortuneCategory('');
+        }
+    }
+
     const fetchData = async () => {
         try {
             const response = await instance.get('/api/v1/fortunes/' + id, {
                 withCredentials: true,
             });
             setFortuneData(response.data);
+            setScoreText(Number(response.data.data.score));
+            setCategortText(response.data.data.category);
             return response.data;
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -498,13 +536,16 @@ function CardComponent(props: { onClickButton: () => void }) {
                         {url === '' ? <CardFrontDefault /> : <CardFront url={url} />}
                         <CardBack>
                             <CardText>
-                                <CardTitle>일이삼사오육칠</CardTitle>
+                                <CardTitle>
+                                    {fortuneCategory}
+                                    {scoreRangeText}
+                                </CardTitle>
                                 <CardContext>{fortuneData.data.description}</CardContext>
                             </CardText>
                         </CardBack>
                     </CardImageComponet>
                 </CardContainer>
-                <BottomText>금전 부적</BottomText>
+                <BottomText>{fortuneCategory} 부적</BottomText>
             </CenterContainer>
             <ButtonComponent>
                 <CTAButton onClick={onClickButtonFunc}>나도 부적 뽑기</CTAButton>

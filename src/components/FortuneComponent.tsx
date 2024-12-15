@@ -436,6 +436,8 @@ function CardComponent() {
     const [flipped, setFlipped] = useState('');
     const [isHidden, setIsHidden] = useState('hidden');
     const [changeText, setChangeText] = useState('');
+    const [scoreRangeText, setScoreRangeText] = useState('만땅!');
+    const [fortuneCategory, setFortuneCategory] = useState('건강운');
     const [fortuneData, setFortuneData] = useState<any>({
         data: { id: 1, category: 'HEALTH', score: 100, description: '' },
     });
@@ -444,6 +446,40 @@ function CardComponent() {
     function preloading(imageUrl: string) {
         const image = new Image();
         image.src = imageUrl;
+    }
+
+    function setScoreText(score: number) {
+        if (score === 100) {
+            setScoreRangeText('운 만땅!');
+        } else if (score > 85) {
+            setScoreRangeText('운 상승');
+        } else if (score > 69) {
+            setScoreRangeText('운 안정');
+        } else if (score > 49) {
+            setScoreRangeText('운 보통');
+        } else {
+            setScoreRangeText('운 상태 미확인인');
+        }
+    }
+
+    function setCategortText(category: string) {
+        if (category === 'FRIENDSHIP') {
+            setFortuneCategory('우정');
+        } else if (category === 'HAPPINESS') {
+            setFortuneCategory('행복');
+        } else if (category === 'HEALTH') {
+            setFortuneCategory('건강');
+        } else if (category === 'LIFE') {
+            setFortuneCategory('갓생');
+        } else if (category === 'LOVE') {
+            setFortuneCategory('연애');
+        } else if (category === 'MONEY') {
+            setFortuneCategory('금전');
+        } else if (category === 'STUDY') {
+            setFortuneCategory('공부');
+        } else {
+            setFortuneCategory('');
+        }
     }
 
     const fetchData = async () => {
@@ -455,6 +491,8 @@ function CardComponent() {
             if (response.data.data.category) {
                 preloading('image/' + response.data.data.category + '_secret.png');
             }
+            setScoreText(Number(response.data.data.score));
+            setCategortText(response.data.data.category);
             return response.data;
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -466,13 +504,21 @@ function CardComponent() {
         exeDeepLink();
     };
 
+    const redirectStore = () => {
+        const url = 'https://apps.apple.com/app/id6478649071';
+        window.location.href = url;
+    };
+
     function exeDeepLink() {
         const userAgent = navigator.userAgent.toLowerCase();
         if (userAgent.search('iphone') > -1 || userAgent.search('ipad') > -1 || userAgent.search('ipot') > -1) {
             const url = 'coin.buki://';
             window.location.href = url;
+            setTimeout(() => {
+                redirectStore();
+            }, 500);
         } else if (toasts === '') {
-            setToasts('안드로이드는 아직 지원하지 않아요 조금만 기다려주세요!');
+            setToasts('아직 지원하지 않는 OS에요\n조금만 기다려주세요!');
             setTimeout(() => {
                 setToasts('');
             }, 2500);
@@ -520,13 +566,16 @@ function CardComponent() {
                         <CardFront $fortunedata={fortuneData.data.category} />
                         <CardBack>
                             <CardText>
-                                <CardTitle>일이삼사오육칠</CardTitle>
+                                <CardTitle>
+                                    {fortuneCategory}
+                                    {scoreRangeText}
+                                </CardTitle>
                                 <CardContext>{fortuneData.data.description}</CardContext>
                             </CardText>
                         </CardBack>
                     </CardImageComponet>
                 </CardContainer>
-                <BottomText>금전 부적</BottomText>
+                <BottomText>{fortuneCategory} 부적</BottomText>
             </CenterContainer>
             <ButtonComponent>
                 <CTAButton onClick={redireactApp}>앱 다운받고 부적 확인하기</CTAButton>
