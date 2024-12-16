@@ -269,7 +269,6 @@ const CardImageComponet = styled.div`
         width: 289px;
         height: 425px;
     }
-
     @media only screen and (max-width: 429px) {
         width: 272px;
         height: 400px;
@@ -345,9 +344,9 @@ const CardText = styled.div`
         height: 312px;
     }
     @media only screen and (max-width: 375px) {
-        padding: 0px 22px 0px 24px;
-        width: 158px;
-        height: 244px;
+        padding: 0px 20px 0px 22px;
+        width: 162px;
+        height: 252px;
     }
     display: flex;
     flex-direction: column;
@@ -367,8 +366,8 @@ const CardTitle = styled.div`
         letter-spacing: -0.56px;
     }
     @media only screen and (max-width: 375px) {
-        font-size: 22px;
-        margin-bottom: 15px;
+        font-size: 20px;
+        margin-bottom: 10px;
         letter-spacing: -0.44px;
     }
     color: var(--Gray-Scale-Gray800, #3a3a3c);
@@ -393,7 +392,7 @@ const CardContext = styled.div`
         letter-spacing: -0.4px;
     }
     @media only screen and (max-width: 375px) {
-        font-size: 14px;
+        font-size: 13px;
         line-height: 20px;
         letter-spacing: -0.3px;
     }
