@@ -7,6 +7,17 @@ import HEALTH_card from '../image/HEALTH_secret.png';
 import back_card from '../image/back_card.png';
 import CTA_button from '../image/CTA_button.png';
 
+const TopComponent = styled.div<{ $height: number }>`
+    @media only screen and (min-width: 375px) {
+        position: relative;
+        height: ${(props) => props.$height}px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+`;
+
 const fadeOutContainerAnimation = keyframes`
   0% {
     opacity: 1
@@ -17,6 +28,7 @@ const fadeOutContainerAnimation = keyframes`
 `;
 
 const FadeOutContainer = styled.div`
+    height: 100dvh;
     &.click {
         opacity: 1;
         animation: ${fadeOutContainerAnimation} 0.2s ease forwards;
@@ -54,10 +66,11 @@ const shake = keyframes`
 
 const BubbleComponent = styled.div`
     @media only screen and (max-width: 375px) {
+        position: absolute;
         top: 16px;
+        margin-bottom: 0px;
     }
-    position: absolute;
-    top: 44px;
+    margin-bottom: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -195,11 +208,10 @@ const ScoreNum = styled.div`
 
 const CenterContainer = styled.div`
     @media only screen and (max-width: 375px) {
+        position: absolute;
         height: 342px;
         top: 78.8px;
     }
-    position: absolute;
-    top: 126px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -391,10 +403,10 @@ const fadeInButtonComponent = keyframes`
 
 const ButtonComponent = styled.div`
     @media only screen and (max-width: 375px) {
-        bottom: 27.2px;
+        bottom: 0px;
     }
     position: absolute;
-    bottom: 34px;
+    bottom: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -405,11 +417,13 @@ const ButtonComponent = styled.div`
 
 const CTAButton = styled.div`
     @media only screen and (max-width: 375px) {
-        height: 28.8px;
-        width: 274.4px;
-        padding-top: 16px;
-        font-size: 12.8px;
-        line-height: 12.8px;
+        height: 36px;
+        width: 100vw;
+        font-size: 16px;
+        line-height: 16px;
+        color: var(--Gray-Scale-White, #fff);
+        background-image: none;
+        background-color: #1c1c1e;
     }
     background-image: url(${CTA_button});
     background-size: cover;
@@ -518,38 +532,40 @@ function CardComponent(props: { onClickButton: () => void }) {
 
     return (
         <FadeOutContainer className={clicked}>
-            <BubbleComponent>
-                <TextBubble>
-                    <TextBubbleContainer className={changeText}>뒤집어서 운세를 확인해주세요~</TextBubbleContainer>
-                    <ScoreComponenet className={changeText}>
-                        <ScoreImage>
-                            <Lottie
-                                animationData={require('../image/' + fortuneData.data.category + scoreRangeText[1])}
-                            />
-                        </ScoreImage>
-                        <ScoreText>오늘의 행운 지수는&nbsp;</ScoreText>
-                        <ScoreNum>{scoreNumber}</ScoreNum>
-                        <ScoreText>!</ScoreText>
-                    </ScoreComponenet>
-                </TextBubble>
-            </BubbleComponent>
-            <CenterContainer>
-                <CardContainer>
-                    <CardImageComponet className={flipped} onClick={handleCardClick}>
-                        {url === '' ? <CardFrontDefault /> : <CardFront url={url} />}
-                        <CardBack>
-                            <CardText>
-                                <CardTitle>
-                                    {fortuneCategory}
-                                    {scoreRangeText[0]}
-                                </CardTitle>
-                                <CardContext>{fortuneData.data.description}</CardContext>
-                            </CardText>
-                        </CardBack>
-                    </CardImageComponet>
-                </CardContainer>
-                <BottomText>{fortuneCategory} 부적</BottomText>
-            </CenterContainer>
+            <TopComponent $height={window.innerHeight - 72}>
+                <BubbleComponent>
+                    <TextBubble>
+                        <TextBubbleContainer className={changeText}>뒤집어서 운세를 확인해주세요~</TextBubbleContainer>
+                        <ScoreComponenet className={changeText}>
+                            <ScoreImage>
+                                <Lottie
+                                    animationData={require('../image/' + fortuneData.data.category + scoreRangeText[1])}
+                                />
+                            </ScoreImage>
+                            <ScoreText>오늘의 행운 지수는&nbsp;</ScoreText>
+                            <ScoreNum>{scoreNumber}</ScoreNum>
+                            <ScoreText>!</ScoreText>
+                        </ScoreComponenet>
+                    </TextBubble>
+                </BubbleComponent>
+                <CenterContainer>
+                    <CardContainer>
+                        <CardImageComponet className={flipped} onClick={handleCardClick}>
+                            {url === '' ? <CardFrontDefault /> : <CardFront url={url} />}
+                            <CardBack>
+                                <CardText>
+                                    <CardTitle>
+                                        {fortuneCategory}
+                                        {scoreRangeText[0]}
+                                    </CardTitle>
+                                    <CardContext>{fortuneData.data.description}</CardContext>
+                                </CardText>
+                            </CardBack>
+                        </CardImageComponet>
+                    </CardContainer>
+                    <BottomText>{fortuneCategory} 부적</BottomText>
+                </CenterContainer>
+            </TopComponent>
             <ButtonComponent>
                 <CTAButton onClick={onClickButtonFunc}>나도 부적 뽑기</CTAButton>
             </ButtonComponent>

@@ -20,6 +20,12 @@ const WaveWrapper = styled.div`
 `;
 
 const WaveLine = styled.div`
+    @media only screen and (max-width: 375px) {
+        width: 245px;
+        height: 32px;
+        font-size: 22px;
+        line-height: 32px;
+    }
     width: 275px;
     height: 40px;
     color: #ffffff;

@@ -29,11 +29,19 @@ const LottieContainer = styled.div`
 `;
 
 const LottieComponent = styled.div`
+    @media only screen and (max-width: 375px) {
+        width: 245px;
+        height: 309px;
+    }
     width: 275px;
     height: 365px;
 `;
 
 const LottieFix = styled.div`
+    @media only screen and (max-width: 375px) {
+        width: 245px;
+        height: 245px;
+    }
     width: 275px;
     height: 275px;
 `;
@@ -577,7 +585,7 @@ function CardComponent() {
                         </CardBack>
                     </CardImageComponet>
                 </CardContainer>
-                <BottomText>{fortuneCategory} 부적</BottomText>
+                <BottomText>알 수 없는 부적 획득</BottomText>
             </CenterContainer>
             <ButtonComponent>
                 <CTAButton onClick={redireactApp}>앱 다운받고 부적 확인하기</CTAButton>
