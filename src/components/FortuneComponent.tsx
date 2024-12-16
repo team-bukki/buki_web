@@ -9,6 +9,17 @@ import back_card from '../image/back_card.png';
 import CTA_button from '../image/CTA_button.png';
 import crystalball from '../image/crystalball.json';
 
+const TopComponent = styled.div<{ $height: number }>`
+    @media only screen and (min-width: 375px) {
+        position: relative;
+        height: ${(props) => props.$height}px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+`;
+
 const fadeOutContainerAnimation = keyframes`
   0% {
     opacity: 1
@@ -77,10 +88,11 @@ const shake = keyframes`
 
 const BubbleComponent = styled.div`
     @media only screen and (max-width: 375px) {
+        position: absolute;
         top: 16px;
+        margin-bottom: 0px;
     }
-    position: absolute;
-    top: 44px;
+    margin-bottom: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -216,17 +228,19 @@ const ScoreNum = styled.div`
     letter-spacing: -0.4px;
 `;
 const CenterContainer = styled.div`
+    @media only screen and (max-width: 429px) {
+        height: 458px;
+    }
     @media only screen and (max-width: 375px) {
+        position: absolute;
         height: 342px;
         top: 78.8px;
     }
-    position: absolute;
-    top: 126px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 100vw;
-    height: 458px;
+    height: 483px;
     &.hidden {
         display: none;
     }
@@ -274,12 +288,20 @@ const fadeInCardImageComponet = keyframes`
 `;
 
 const CardImageComponet = styled.div`
+    @media only screen and (max-width: 589px) {
+        width: 289px;
+        height: 425px;
+    }
+    @media only screen and (max-width: 429px) {
+        width: 272px;
+        height: 400px;
+    }
     @media only screen and (max-width: 375px) {
         width: 204px;
         height: 300px;
     }
-    width: 272px;
-    height: 400px;
+    width: 289px;
+    height: 425px;
     transform-style: preserve-3d;
     transition: transform 0.6s;
     animation: ${fadeInCardImageComponet} 0.6s ease-in-out forwards;
@@ -321,6 +343,16 @@ const CardBack = styled.div`
 `;
 
 const CardText = styled.div`
+    @media only screen and (max-width: 589px) {
+        padding: 0px 30px 0px 34px;
+        width: 225px;
+        height: 333px;
+    }
+    @media only screen and (max-width: 429px) {
+        padding: 0px 28px 0px 32px;
+        width: 212px;
+        height: 312px;
+    }
     @media only screen and (max-width: 375px) {
         padding: 0px 22px 0px 24px;
         width: 158px;
@@ -328,27 +360,47 @@ const CardText = styled.div`
     }
     display: flex;
     flex-direction: column;
-    padding: 0px 28px 0px 32px;
-    width: 212px;
-    height: 312px;
+    padding: 0px 30px 0px 34px;
+    width: 225px;
+    height: 333px;
 `;
 
 const CardTitle = styled.div`
+    @media only screen and (max-width: 589px) {
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+    @media only screen and (max-width: 429px) {
+        font-size: 28px;
+        margin-bottom: 19.4px;
+        letter-spacing: -0.56px;
+    }
     @media only screen and (max-width: 375px) {
         font-size: 22px;
         margin-bottom: 15px;
+        letter-spacing: -0.44px;
     }
     color: var(--Gray-Scale-Gray800, #3a3a3c);
     font-family: Galmuri9;
-    font-size: 28px;
+    font-size: 30px;
     font-style: normal;
     font-weight: 400;
     line-height: 120%; /* 33.6px */
-    letter-spacing: -0.56px;
-    margin-bottom: 19.4px;
+    letter-spacing: -0.6px;
+    margin-bottom: 20px;
 `;
 
 const CardContext = styled.div`
+    @media only screen and (max-width: 589px) {
+        font-size: 17px;
+        line-height: 28px;
+        letter-spacing: -0.4px;
+    }
+    @media only screen and (max-width: 429px) {
+        font-size: 16px;
+        line-height: 162.5%; /* 26px */
+        letter-spacing: -0.4px;
+    }
     @media only screen and (max-width: 375px) {
         font-size: 14px;
         line-height: 20px;
@@ -356,10 +408,10 @@ const CardContext = styled.div`
     }
     color: var(--Gray-Scale-Gray800, #3a3a3c);
     font-family: Pretendard;
-    font-size: 16px;
+    font-size: 17px;
     font-style: normal;
     font-weight: 400;
-    line-height: 162.5%; /* 26px */
+    line-height: 28px;
     letter-spacing: -0.4px;
 `;
 
@@ -403,10 +455,10 @@ const fadeInButtonComponent = keyframes`
 
 const ButtonComponent = styled.div`
     @media only screen and (max-width: 375px) {
-        bottom: 27.2px;
+        bottom: 0px;
     }
     position: absolute;
-    bottom: 34px;
+    bottom: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -416,12 +468,14 @@ const ButtonComponent = styled.div`
 `;
 
 const CTAButton = styled.div`
-    @media only screen and (max-width: 400px) {
-        height: 28.8px;
-        width: 274.4px;
-        padding-top: 16px;
-        font-size: 12.8px;
-        line-height: 12.8px;
+    @media only screen and (max-width: 375px) {
+        height: 36px;
+        width: 100vw;
+        font-size: 16px;
+        line-height: 16px;
+        color: var(--Gray-Scale-White, #fff);
+        background-image: none;
+        background-color: #1c1c1e;
     }
     background-image: url(${CTA_button});
     background-size: cover;
@@ -555,38 +609,41 @@ function CardComponent() {
                     <WaveTextComponent text="두근두근...enter무슨 부적이 나올까?" />
                 </LottieComponent>
             </LottieContainer>
-            <BubbleComponent>
-                <TextBubble>
-                    <TextBubbleContainer className={changeText}>뒤집어서 운세를 확인해주세요~</TextBubbleContainer>
-                    <ScoreComponenet className={changeText}>
-                        <ScoreImage>
-                            <Lottie
-                                animationData={require('../image/' + fortuneData.data.category + scoreRangeText[1])}
-                            />
-                        </ScoreImage>
-                        <ScoreText>오늘의 행운 지수는&nbsp;</ScoreText>
-                        <ScoreNum>{fortuneData.data.score}</ScoreNum>
-                        <ScoreText>!</ScoreText>
-                    </ScoreComponenet>
-                </TextBubble>
-            </BubbleComponent>
-            <CenterContainer className={isHidden}>
-                <CardContainer>
-                    <CardImageComponet className={flipped} onClick={handleCardClick}>
-                        <CardFront $fortunedata={fortuneData.data.category} />
-                        <CardBack>
-                            <CardText>
-                                <CardTitle>
-                                    {fortuneCategory}
-                                    {scoreRangeText[0]}
-                                </CardTitle>
-                                <CardContext>{fortuneData.data.description}</CardContext>
-                            </CardText>
-                        </CardBack>
-                    </CardImageComponet>
-                </CardContainer>
-                <BottomText>알 수 없는 부적 획득</BottomText>
-            </CenterContainer>
+            <TopComponent $height={window.innerHeight - 72}>
+                <BubbleComponent>
+                    <TextBubble>
+                        <TextBubbleContainer className={changeText}>뒤집어서 운세를 확인해주세요~</TextBubbleContainer>
+                        <ScoreComponenet className={changeText}>
+                            <ScoreImage>
+                                <Lottie
+                                    animationData={require('../image/' + fortuneData.data.category + scoreRangeText[1])}
+                                />
+                            </ScoreImage>
+                            <ScoreText>오늘의 행운 지수는&nbsp;</ScoreText>
+                            <ScoreNum>{fortuneData.data.score}</ScoreNum>
+                            <ScoreText>!</ScoreText>
+                        </ScoreComponenet>
+                    </TextBubble>
+                </BubbleComponent>
+
+                <CenterContainer className={isHidden}>
+                    <CardContainer>
+                        <CardImageComponet className={flipped} onClick={handleCardClick}>
+                            <CardFront $fortunedata={fortuneData.data.category} />
+                            <CardBack>
+                                <CardText>
+                                    <CardTitle>
+                                        {fortuneCategory}
+                                        {scoreRangeText[0]}
+                                    </CardTitle>
+                                    <CardContext>{fortuneData.data.description}</CardContext>
+                                </CardText>
+                            </CardBack>
+                        </CardImageComponet>
+                    </CardContainer>
+                    <BottomText>알 수 없는 부적 획득</BottomText>
+                </CenterContainer>
+            </TopComponent>
             <ButtonComponent>
                 <CTAButton onClick={redireactApp}>앱 다운받고 부적 확인하기</CTAButton>
             </ButtonComponent>

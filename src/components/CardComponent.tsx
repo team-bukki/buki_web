@@ -207,6 +207,9 @@ const ScoreNum = styled.div`
 `;
 
 const CenterContainer = styled.div`
+    @media only screen and (max-width: 429px) {
+        height: 458px;
+    }
     @media only screen and (max-width: 375px) {
         position: absolute;
         height: 342px;
@@ -216,7 +219,7 @@ const CenterContainer = styled.div`
     flex-direction: column;
     justify-content: space-between;
     width: 100vw;
-    height: 458px;
+    height: 483px;
 `;
 
 const CardContainer = styled.div`
@@ -262,12 +265,21 @@ const fadeInCardImageComponet = keyframes`
 `;
 
 const CardImageComponet = styled.div`
+    @media only screen and (max-width: 589px) {
+        width: 289px;
+        height: 425px;
+    }
+
+    @media only screen and (max-width: 429px) {
+        width: 272px;
+        height: 400px;
+    }
     @media only screen and (max-width: 375px) {
         width: 204px;
         height: 300px;
     }
-    width: 272px;
-    height: 400px;
+    width: 289px;
+    height: 425px;
     transform-style: preserve-3d;
     transition: transform 0.6s;
     animation: ${fadeInCardImageComponet} 0.6s ease-in-out 0.6s forwards;
@@ -321,6 +333,17 @@ const CardBack = styled.div`
 `;
 
 const CardText = styled.div`
+    @media only screen and (max-width: 589px) {
+        padding: 0px 30px 0px 34px;
+        width: 225px;
+        height: 333px;
+    }
+
+    @media only screen and (max-width: 429px) {
+        padding: 0px 28px 0px 32px;
+        width: 212px;
+        height: 312px;
+    }
     @media only screen and (max-width: 375px) {
         padding: 0px 22px 0px 24px;
         width: 158px;
@@ -328,27 +351,47 @@ const CardText = styled.div`
     }
     display: flex;
     flex-direction: column;
-    padding: 0px 28px 0px 32px;
-    width: 212px;
-    height: 312px;
+    padding: 0px 30px 0px 34px;
+    width: 225px;
+    height: 333px;
 `;
 
 const CardTitle = styled.div`
+    @media only screen and (max-width: 589px) {
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+    @media only screen and (max-width: 429px) {
+        font-size: 28px;
+        margin-bottom: 19.4px;
+        letter-spacing: -0.56px;
+    }
     @media only screen and (max-width: 375px) {
         font-size: 22px;
         margin-bottom: 15px;
+        letter-spacing: -0.44px;
     }
     color: var(--Gray-Scale-Gray800, #3a3a3c);
     font-family: Galmuri9;
-    font-size: 28px;
+    font-size: 30px;
     font-style: normal;
     font-weight: 400;
     line-height: 120%; /* 33.6px */
-    letter-spacing: -0.56px;
-    margin-bottom: 19.4px;
+    letter-spacing: -0.6px;
+    margin-bottom: 20px;
 `;
 
 const CardContext = styled.div`
+    @media only screen and (max-width: 589px) {
+        font-size: 17px;
+        line-height: 28px;
+        letter-spacing: -0.4px;
+    }
+    @media only screen and (max-width: 429px) {
+        font-size: 16px;
+        line-height: 162.5%; /* 26px */
+        letter-spacing: -0.4px;
+    }
     @media only screen and (max-width: 375px) {
         font-size: 14px;
         line-height: 20px;
@@ -356,10 +399,10 @@ const CardContext = styled.div`
     }
     color: var(--Gray-Scale-Gray800, #3a3a3c);
     font-family: Pretendard;
-    font-size: 16px;
+    font-size: 17px;
     font-style: normal;
     font-weight: 400;
-    line-height: 162.5%; /* 26px */
+    line-height: 28px;
     letter-spacing: -0.4px;
 `;
 
