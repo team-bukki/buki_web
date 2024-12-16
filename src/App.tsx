@@ -19,7 +19,7 @@ const BackgroundComponent = styled.div`
 const BackgroundImageComponent = styled.img`
     position: absolute;
     width: 100vw;
-    max-height: 100vh;
+    max-height: 100dvh;
 `;
 
 function App() {
