@@ -6,8 +6,11 @@ import FortuneComponent from './components/FortuneComponent';
 
 const BackgroundContainer = styled.div`
     background-image: linear-gradient(#3495ff, #85bfff);
-    height: 100lvh;
+    height: 100dvh;
     overflow: hidden;
+    @supports (-webkit-touch-callout: none) {
+        height: -webkit-fill-available;
+    }
 `;
 
 const BackgroundComponent = styled.div`
