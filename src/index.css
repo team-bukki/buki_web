@@ -17,17 +17,20 @@ body {
 
 @font-face {
     font-family: 'PretendardBold';
-    src: local('PretendardBold'), url('./fonts/Pretendard-Bold.woff') format('woff');
+    src: local('PretendardBold'), url('./fonts/Pretendard-Bold.woff2') format('woff2'),
+        url('./fonts/Pretendard-Bold.woff') format('woff');
 }
 
 @font-face {
     font-family: 'Pretendard';
-    src: local('PretendardMedium'), url('./fonts/Pretendard-Medium.woff') format('woff');
+    src: local('PretendardMedium'), url('./fonts/Pretendard-Medium.woff2') format('woff2'),
+        url('./fonts/Pretendard-Medium.woff') format('woff');
 }
 
 @font-face {
     font-family: 'PretendardRegular';
-    src: local('PretendardRegular'), url('./fonts/Pretendard-Regular.woff') format('woff');
+    src: local('PretendardRegular'), url('./fonts/Pretendard-Regular.woff2') format('woff2'),
+        url('./fonts/Pretendard-Regular.woff') format('woff');
 }
 
 code {
