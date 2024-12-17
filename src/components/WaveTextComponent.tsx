@@ -41,7 +41,7 @@ const WaveLine = styled.div`
 const WaveChar = styled.span<{ $index: number }>`
     display: inline-block;
     transform-origin: bottom center;
-    animation: ${waveAnimation} 2s ease-in-out infinite;
+    animation: ${waveAnimation} 1.2s ease-in-out infinite;
     animation-delay: ${({ $index }) => `${$index * 0.1}s`};
 `;
 

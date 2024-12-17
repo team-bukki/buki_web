@@ -129,7 +129,7 @@ const TextBubbleContainer = styled.div`
     line-height: 16px;
     letter-spacing: -0.4px;
     &.changeText {
-        animation: ${fadeOutTextBubbleContainer} 0.6s ease-in-out forwards;
+        animation: ${fadeOutTextBubbleContainer} 0.4s ease-in-out forwards;
     }
 `;
 
@@ -162,7 +162,7 @@ const ScoreComponenet = styled.div`
     width: 286px;
     visibility: hidden;
     &.changeText {
-        animation: ${fadeInScoreComponenet} 0.6s ease-in-out 0.65s forwards;
+        animation: ${fadeInScoreComponenet} 0.4s ease-in-out 0.45s forwards;
     }
 `;
 
