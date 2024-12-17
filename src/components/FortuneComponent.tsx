@@ -113,6 +113,7 @@ const TextBubble = styled.div`
     background-size: cover;
     height: 66px;
     width: 286px;
+    position: relative;
 `;
 
 const fadeOutTextBubbleContainer = keyframes`
@@ -123,7 +124,6 @@ const fadeOutTextBubbleContainer = keyframes`
   100% {
     opacity: 0;
     transform: translateY(10px);
-    display: none
   }
 `;
 
@@ -133,12 +133,13 @@ const TextBubbleContainer = styled.div`
         width: 228.8px;
         font-size: 12.8px;
         line-height: 12.8px;
-        margin-top: 6.4px;
+        top: 6.4px;
     }
+    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 9.5px;
+    top: 9.5px;
     height: 40px;
     width: 286px;
     color: var(--Gray-Scale-Gray900, #1c1c1e);
