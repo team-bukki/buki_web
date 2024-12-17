@@ -8,6 +8,7 @@ body {
     -ms-text-size-adjust: none; /* IE */
     -moz-text-size-adjust: none; /* 파이어폭스 */
     -o-text-size-adjust: none; /* 오페라 구버전 */
+    text-size-adjust: none;
 }
 
 @font-face {
