@@ -6,12 +6,12 @@ import FortuneComponent from './components/FortuneComponent';
 
 const BackgroundContainer = styled.div`
     background-image: linear-gradient(#3495ff, #85bfff);
-    height: 100vh;
+    height: 100lvh;
     overflow: hidden;
 `;
 
 const BackgroundComponent = styled.div`
-    height: 100dvh;
+    height: 100svh;
     position: relative;
     overflow: hidden;
 `;
@@ -19,7 +19,7 @@ const BackgroundComponent = styled.div`
 const BackgroundImageComponent = styled.img`
     position: absolute;
     width: 100vw;
-    max-height: 100dvh;
+    max-height: 100svh;
 `;
 
 function App() {
