@@ -10,14 +10,12 @@ import CTA_button from '../image/CTA_button.png';
 import crystalball from '../image/crystalball.json';
 
 const TopComponent = styled.div<{ $height: number }>`
-    @media only screen and (min-width: 375px) {
-        position: relative;
-        height: ${(props) => props.$height}px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
+    position: relative;
+    height: ${(props) => props.$height}px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 `;
 
 const fadeOutContainerAnimation = keyframes`
@@ -87,11 +85,6 @@ const shake = keyframes`
 `;
 
 const BubbleComponent = styled.div`
-    @media only screen and (max-width: 375px) {
-        position: absolute;
-        top: 16px;
-        margin-bottom: 0px;
-    }
     margin-bottom: 16px;
     display: flex;
     justify-content: center;
@@ -100,20 +93,19 @@ const BubbleComponent = styled.div`
     animation: ${fadeInBubbleComponent} 0.45s ease-in-out 5.8s forwards, ${shake} 1s ease-in-out 6.25s infinite;
     opacity: 0;
     transform: translateY(10px);
+    margin-bottom: 10px;
 `;
 
 const TextBubble = styled.div`
-    @media only screen and (max-width: 375px) {
-        height: 53px;
-        width: 228.8px;
-        font-size: 12.8px;
-        line-height: 12.8px;
-    }
     background-image: url(${text_bubble});
     background-size: cover;
-    height: 66px;
-    width: 286px;
+    height: 53px;
+    width: 228.8px;
     position: relative;
+    @media only screen and (min-width: 375px) {
+        height: 66px;
+        width: 286px;
+    }
 `;
 
 const fadeOutTextBubbleContainer = keyframes`
@@ -128,28 +120,28 @@ const fadeOutTextBubbleContainer = keyframes`
 `;
 
 const TextBubbleContainer = styled.div`
-    @media only screen and (max-width: 375px) {
-        height: 32.9px;
-        width: 228.8px;
-        font-size: 12.8px;
-        line-height: 12.8px;
-        top: 6.4px;
-    }
     position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    top: 9.5px;
-    height: 40px;
-    width: 286px;
+    height: 32.9px;
+    width: 228.8px;
+    font-size: 12.8px;
+    line-height: 12.8px;
+    top: 6.4px;
     color: var(--Gray-Scale-Gray900, #1c1c1e);
     text-align: center;
     font-family: Pretendard;
-    font-size: 16px;
     font-style: normal;
     font-weight: 500;
-    line-height: 16px;
     letter-spacing: -0.4px;
+    @media only screen and (min-width: 375px) {
+        top: 9.5px;
+        height: 40px;
+        width: 286px;
+        font-size: 16px;
+        line-height: 16px;
+    }
     &.changeText {
         animation: ${fadeOutTextBubbleContainer} 0.4s ease-in-out forwards;
     }
@@ -169,79 +161,75 @@ const fadeInScoreComponenet = keyframes`
 `;
 
 const ScoreComponenet = styled.div`
-    @media only screen and (max-width: 375px) {
-        height: 32.9px;
-        width: 228.8px;
-        font-size: 12.8px;
-        line-height: 12.8px;
-        margin-top: 6.4px;
-    }
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 9.5px;
-    height: 40px;
-    width: 286px;
+    height: 32.9px;
+    width: 228.8px;
+    margin-top: 6.4px;
     visibility: hidden;
+    @media only screen and (min-width: 375px) {
+        height: 40px;
+        width: 286px;
+        margin-top: 9.5px;
+    }
     &.changeText {
         animation: ${fadeInScoreComponenet} 0.4s ease-in-out 0.45s forwards;
     }
 `;
 
 const ScoreImage = styled.div`
-    @media only screen and (max-width: 375px) {
-        height: 24px;
-        width: 24px;
-        margin-right: 3.2px;
+    height: 24px;
+    width: 24px;
+    margin-right: 3.2px;
+    @media only screen and (min-width: 375px) {
+        height: 30px;
+        width: 30px;
+        margin-right: 4px;
     }
-    height: 30px;
-    width: 30px;
-    margin-right: 4px;
 `;
 
 const ScoreText = styled.div`
-    @media only screen and (max-width: 375px) {
-        font-size: 12.8px;
-        line-height: 12.8px;
-    }
     color: var(--Gray-Scale-Gray900, #1c1c1e);
     text-align: center;
     font-family: Pretendard;
-    font-size: 16px;
+    font-size: 12.8px;
+    line-height: 12.8px;
     font-style: normal;
     font-weight: 500;
-    line-height: 16px;
     letter-spacing: -0.4px;
+    @media only screen and (min-width: 375px) {
+        font-size: 16px;
+        line-height: 16px;
+    }
 `;
 
 const ScoreNum = styled.div`
-    @media only screen and (max-width: 375px) {
-        font-size: 12.8px;
-        line-height: 12.8px;
-    }
     color: var(--Semantic-Colors-Blue, #007aff);
     text-align: center;
     font-family: Pretendard;
-    font-size: 16px;
+    font-size: 12.8px;
+    line-height: 12.8px;
     font-style: normal;
     font-weight: 500;
-    line-height: 16px;
     letter-spacing: -0.4px;
+    @media only screen and (min-width: 375px) {
+        font-size: 16px;
+        line-height: 16px;
+    }
 `;
 const CenterContainer = styled.div`
-    @media only screen and (max-width: 429px) {
-        height: 458px;
-    }
-    @media only screen and (max-width: 375px) {
-        position: absolute;
-        height: 342px;
-        top: 78.8px;
-    }
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 100vw;
-    height: 483px;
+    height: 342px;
+    @media only screen and (min-width: 375px) {
+        height: 458px;
+    }
+    @media only screen and (min-width: 429px) {
+        height: 483px;
+    }
     &.hidden {
         display: none;
     }
@@ -289,25 +277,21 @@ const fadeInCardImageComponet = keyframes`
 `;
 
 const CardImageComponet = styled.div`
-    @media only screen and (max-width: 589px) {
-        width: 289px;
-        height: 425px;
-    }
-    @media only screen and (max-width: 429px) {
-        width: 272px;
-        height: 400px;
-    }
-    @media only screen and (max-width: 375px) {
-        width: 204px;
-        height: 300px;
-    }
-    width: 289px;
-    height: 425px;
+    width: 204px;
+    height: 300px;
     transform-style: preserve-3d;
     transition: transform 0.6s;
     animation: ${fadeInCardImageComponet} 0.6s ease-in-out forwards;
     opacity: 0;
     transform: translateY(40px);
+    @media only screen and (min-width: 375px) {
+        width: 272px;
+        height: 400px;
+    }
+    @media only screen and (min-width: 429px) {
+        width: 289px;
+        height: 425px;
+    }
     &.flipped {
         opacity: 1;
         animation: ${flipAndStretch} 0.6s ease forwards;
@@ -344,76 +328,63 @@ const CardBack = styled.div`
 `;
 
 const CardText = styled.div`
-    @media only screen and (max-width: 589px) {
-        padding: 0px 30px 0px 34px;
-        width: 225px;
-        height: 333px;
-    }
-    @media only screen and (max-width: 429px) {
+    padding: 0px 20px 0px 22px;
+    width: 162px;
+    height: 252px;
+    display: flex;
+    flex-direction: column;
+    @media only screen and (min-width: 375px) {
         padding: 0px 28px 0px 32px;
         width: 212px;
         height: 312px;
     }
-    @media only screen and (max-width: 375px) {
-        padding: 0px 20px 0px 22px;
-        width: 162px;
-        height: 252px;
+    @media only screen and (min-width: 429px) {
+        padding: 0px 30px 0px 34px;
+        width: 225px;
+        height: 333px;
     }
-    display: flex;
-    flex-direction: column;
-    padding: 0px 30px 0px 34px;
-    width: 225px;
-    height: 333px;
 `;
 
 const CardTitle = styled.div`
-    @media only screen and (max-width: 589px) {
-        font-size: 30px;
-        margin-bottom: 20px;
-    }
-    @media only screen and (max-width: 429px) {
+    color: var(--Gray-Scale-Gray800, #3a3a3c);
+    font-family: Galmuri9;
+    font-size: 20px;
+    margin-bottom: 10px;
+    letter-spacing: -0.44px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%; /* 33.6px */
+
+    @media only screen and (min-width: 375px) {
         font-size: 28px;
         margin-bottom: 19.4px;
         letter-spacing: -0.56px;
     }
-    @media only screen and (max-width: 375px) {
-        font-size: 20px;
-        margin-bottom: 10px;
-        letter-spacing: -0.44px;
+    @media only screen and (min-width: 429px) {
+        font-size: 30px;
+        letter-spacing: -0.6px;
+        margin-bottom: 20px;
     }
-    color: var(--Gray-Scale-Gray800, #3a3a3c);
-    font-family: Galmuri9;
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 120%; /* 33.6px */
-    letter-spacing: -0.6px;
-    margin-bottom: 20px;
 `;
 
 const CardContext = styled.div`
-    @media only screen and (max-width: 589px) {
-        font-size: 17px;
-        line-height: 28px;
-        letter-spacing: -0.4px;
-    }
-    @media only screen and (max-width: 429px) {
+    color: var(--Gray-Scale-Gray800, #3a3a3c);
+    font-family: Pretendard;
+    font-size: 13px;
+    line-height: 20px;
+    letter-spacing: -0.3px;
+    font-style: normal;
+    font-weight: 400;
+    @media only screen and (min-width: 375px) {
         font-size: 16px;
         line-height: 162.5%; /* 26px */
         letter-spacing: -0.4px;
     }
-    @media only screen and (max-width: 375px) {
-        font-size: 13px;
-        line-height: 20px;
-        letter-spacing: -0.3px;
+    @media only screen and (min-width: 429px) {
+        font-size: 17px;
+        line-height: 28px;
+        letter-spacing: -0.4px;
     }
-    color: var(--Gray-Scale-Gray800, #3a3a3c);
-    font-family: Pretendard;
-    font-size: 17px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 28px;
-    letter-spacing: -0.4px;
 `;
 
 const fadeInBottomText = keyframes`
@@ -428,21 +399,21 @@ const fadeInBottomText = keyframes`
 `;
 
 const BottomText = styled.div`
-    @media only screen and (max-width: 375px) {
-        font-size: 20px;
-        line-height: 30px;
-    }
     color: #ffffff;
     text-align: center;
-    font-family: Pretendard;
-    font-size: 24px;
+    font-family: PretendardBold;
+    font-size: 20px;
+    line-height: 30px;
     font-style: normal;
     font-weight: 700;
-    line-height: 34px; /* 100% */
     letter-spacing: -0.4px;
     animation: ${fadeInBottomText} 0.6s ease-in-out 0.6s forwards;
     opacity: 0;
     transform: translateY(50px) scale(0.7);
+    @media only screen and (min-width: 375px) {
+        font-size: 24px;
+        line-height: 34px; /* 100% */
+    }
 `;
 
 const fadeInButtonComponent = keyframes`
@@ -455,42 +426,41 @@ const fadeInButtonComponent = keyframes`
 `;
 
 const ButtonComponent = styled.div`
-    @media only screen and (max-width: 375px) {
-        bottom: 0px;
-    }
     position: absolute;
-    bottom: 16px;
+    bottom: 0px;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100vw;
     animation: ${fadeInButtonComponent} 0.45s ease-in-out 6.25s forwards;
     transform: translateY(90px);
+    @media only screen and (min-width: 375px) {
+        bottom: 16px;
+    }
 `;
 
 const CTAButton = styled.div`
-    @media only screen and (max-width: 375px) {
-        height: 36px;
-        width: 100vw;
-        font-size: 16px;
-        line-height: 16px;
-        color: var(--Gray-Scale-White, #fff);
-        background-image: none;
-        background-color: #1c1c1e;
-    }
-    background-image: url(${CTA_button});
-    background-size: cover;
     height: 36px;
-    width: 343px;
-    padding-top: 20px;
+    width: 100vw;
+    font-size: 16px;
+    line-height: 16px;
     color: var(--Gray-Scale-White, #fff);
+    background-color: #1c1c1e;
     text-align: center;
     font-family: Pretendard;
-    font-size: 16px;
     font-style: normal;
     font-weight: 500;
-    line-height: 16px;
     letter-spacing: -0.4px;
+    padding-top: 20px;
+    @media only screen and (min-width: 375px) {
+        height: 36px;
+        width: 343px;
+        font-size: 16px;
+        line-height: 16px;
+        background-image: url(${CTA_button});
+        background-size: cover;
+        background-color: none;
+    }
 `;
 
 function CardComponent() {

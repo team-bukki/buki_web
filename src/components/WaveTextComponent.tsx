@@ -12,30 +12,28 @@ const waveAnimation = keyframes`
 
 const WaveWrapper = styled.div`
     display: inline-block;
-    font-size: 2rem;
-    font-weight: bold;
     overflow: hidden;
     white-space: pre-line; /* 줄바꿈 지원 */
     text-align: center; /* 중앙 정렬 */
 `;
 
 const WaveLine = styled.div`
-    @media only screen and (max-width: 375px) {
-        width: 245px;
-        height: 32px;
-        font-size: 22px;
-        line-height: 32px;
-    }
-    width: 275px;
-    height: 40px;
+    width: 245px;
+    height: 32px;
+    font-size: 22px;
+    line-height: 32px;
     color: #ffffff;
     text-align: center;
-    font-family: Pretendard;
-    font-size: 24px;
+    font-family: PretendardBold;
     font-style: normal;
     font-weight: 700;
-    line-height: 34px;
     letter-spacing: -0.4px;
+    @media only screen and (min-width: 375px) {
+        width: 275px;
+        height: 40px;
+        font-size: 24px;
+        line-height: 34px;
+    }
 `;
 
 const WaveChar = styled.span<{ $index: number }>`
