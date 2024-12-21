@@ -448,7 +448,7 @@ const CTAButton = styled.div`
         line-height: 16px;
         background-image: url(${CTA_button});
         background-size: cover;
-        background-color: none;
+        background-color:transparent;
     }
 `;
 
