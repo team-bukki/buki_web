@@ -317,6 +317,7 @@ const CardBack = styled.div`
 `;
 
 const CardText = styled.div`
+    white-space: pre-line;
     padding: 0px 20px 0px 22px;
     width: 162px;
     height: 252px;
@@ -448,7 +449,7 @@ const CTAButton = styled.div`
         line-height: 16px;
         background-image: url(${CTA_button});
         background-size: cover;
-        background-color:transparent;
+        background-color: transparent;
     }
 `;
 
@@ -457,11 +458,21 @@ function CardComponent(props: { onClickButton: () => void }) {
     const [clicked, setClicked] = useState('');
     const [changeText, setChangeText] = useState('');
     const [url, setUrl] = useState('');
-    const [scoreNumber, setScoreNumber] = useState('100');
-    const [scoreRangeText, setScoreRangeText] = useState(['운 만땅!', '_lovely']);
-    const [fortuneCategory, setFortuneCategory] = useState('건강');
+    const [scoreNumber, setScoreNumber] = useState('99');
+    const [scoreRangeText, setScoreRangeText] = useState(['운 대박!', '_joy']);
+    const [fortuneCategory, setFortuneCategory] = useState('행');
     const [fortuneData, setFortuneData] = useState<any>({
-        data: { id: 1, category: 'HEALTH', score: 100, description: '' },
+        data: {
+            id: 1,
+            category: 'HAPPINESS',
+            score: 99,
+            description: `오늘 완전 럭키부키데이!
+            누구보다 행운이 가득한 날입니다.
+            주변 사람들의 응원 속에서 성취를 이룰 수 있을거에요!
+            ...
+            
+            오늘의 운세를 확인하고 행운의 부적을 매일매일 받아보세요!🍀`,
+        },
     });
 
     function preloading(imageUrls: string[]) {
@@ -481,7 +492,7 @@ function CardComponent(props: { onClickButton: () => void }) {
         } else if (score > 49) {
             setScoreRangeText(['운 보통', '_default']);
         } else {
-            setScoreRangeText(['운 상태 미확인', '_default']);
+            setScoreRangeText([' 대박', '_joy']);
         }
     }
 
@@ -501,20 +512,25 @@ function CardComponent(props: { onClickButton: () => void }) {
         } else if (category === 'STUDY') {
             setFortuneCategory('공부');
         } else {
-            setFortuneCategory('');
+            setFortuneCategory('행운');
         }
     }
 
     const fetchData = async (id: string, score: string) => {
         try {
-            const response = await instance.get('/api/v1/fortunes/' + id, {
-                withCredentials: true,
-            });
-            setFortuneData(response.data);
-            setScoreText(Number(score));
+            if (id !== '-1') {
+                const response = await instance.get('/api/v1/fortunes/' + id, {
+                    withCredentials: true,
+                });
+                setFortuneData(response.data);
+                setCategortText(response.data.data.category);
+                setScoreText(Number(score));
+            } else {
+                setCategortText('');
+                setScoreText(1);
+            }
             setScoreNumber(score);
-            setCategortText(response.data.data.category);
-            return response.data;
+            return;
         } catch (error) {
             console.error('Error fetching data:', error);
             throw error;
@@ -538,7 +554,7 @@ function CardComponent(props: { onClickButton: () => void }) {
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
         setUrl(queryParams.get('imageUrl') || '');
-        fetchData(queryParams.get('fortuneId') || '1', queryParams.get('fortuneScore') || '100');
+        fetchData(queryParams.get('fortuneId') || '-1', queryParams.get('fortuneScore') || '99');
         preloading([url, HEALTH_card]);
     }, []);
 
