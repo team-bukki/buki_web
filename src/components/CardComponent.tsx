@@ -6,6 +6,7 @@ import text_bubble from '../image/text_bubble.png';
 import HEALTH_card from '../image/HEALTH_secret.png';
 import back_card from '../image/back_card.png';
 import CTA_button from '../image/CTA_button.png';
+import DEFAULT from '../image/DEFAULT.png';
 
 const TopComponent = styled.div<{ $height: number }>`
     position: relative;
@@ -292,7 +293,7 @@ const CardFront = styled.div<{ url: string }>`
 `;
 
 const CardFrontDefault = styled.div`
-    background-image: url(${HEALTH_card});
+    background-image: url(${DEFAULT});
     background-size: cover;
     position: absolute;
     width: 100%;
@@ -555,7 +556,7 @@ function CardComponent(props: { onClickButton: () => void }) {
         const queryParams = new URLSearchParams(window.location.search);
         setUrl(queryParams.get('imageUrl') || '');
         fetchData(queryParams.get('fortuneId') || '-1', queryParams.get('fortuneScore') || '99');
-        preloading([url, HEALTH_card]);
+        preloading([url, DEFAULT]);
     }, []);
 
     return (
