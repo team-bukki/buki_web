@@ -526,7 +526,7 @@ function CardComponent(props: { onClickButton: () => void }) {
         } else if (QRText === 'HEALTH_R') {
             setQRText('rabbit');
         } else {
-            setQR(QRText);
+            setQRText(QRText);
         }
     }
 
