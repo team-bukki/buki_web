@@ -6,7 +6,6 @@ import text_bubble from '../image/text_bubble.png';
 import HEALTH_card from '../image/HEALTH_secret.png';
 import back_card from '../image/back_card.png';
 import CTA_button from '../image/CTA_button.png';
-import DEFAULT from '../image/DEFAULT.png';
 
 const TopComponent = styled.div<{ $height: number }>`
     position: relative;
@@ -292,8 +291,8 @@ const CardFront = styled.div<{ url: string }>`
     backface-visibility: hidden;
 `;
 
-const CardFrontDefault = styled.div`
-    background-image: url(${DEFAULT});
+const CardFrontDefault = styled.div<{ $QR: string }>`
+    background-image: url(image/${(props) => props.$QR}.png);
     background-size: cover;
     position: absolute;
     width: 100%;
@@ -459,14 +458,16 @@ function CardComponent(props: { onClickButton: () => void }) {
     const [clicked, setClicked] = useState('');
     const [changeText, setChangeText] = useState('');
     const [url, setUrl] = useState('');
-    const [scoreNumber, setScoreNumber] = useState('99');
-    const [scoreRangeText, setScoreRangeText] = useState(['운 대박!', '_joy']);
-    const [fortuneCategory, setFortuneCategory] = useState('행');
+    const [QR, setQR] = useState('');
+    const [scoreNumber, setScoreNumber] = useState('100');
+    const [scoreRangeText, setScoreRangeText] = useState([' 만땅!', '_lovely']);
+    const [fortuneCategory, setFortuneCategory] = useState('행운');
+    const [QRText, setQRText] = useState('HAPPINESS');
     const [fortuneData, setFortuneData] = useState<any>({
         data: {
             id: 1,
             category: 'HAPPINESS',
-            score: 99,
+            score: 100,
             description: `오늘 완전 럭키부키데이!
             누구보다 행운이 가득한 날입니다.
             주변 사람들의 응원 속에서 성취를 이룰 수 있을거에요!
@@ -485,13 +486,13 @@ function CardComponent(props: { onClickButton: () => void }) {
 
     function setScoreText(score: number) {
         if (score === 100) {
-            setScoreRangeText(['운 만땅!', '_lovely']);
+            setScoreRangeText([' 만땅!', '_lovely']);
         } else if (score > 85) {
-            setScoreRangeText(['운 상승', '_joy']);
+            setScoreRangeText([' 상승', '_joy']);
         } else if (score > 69) {
-            setScoreRangeText(['운 안정', '_smile']);
+            setScoreRangeText([' 안정', '_smile']);
         } else if (score > 49) {
-            setScoreRangeText(['운 보통', '_default']);
+            setScoreRangeText([' 보통', '_default']);
         } else {
             setScoreRangeText([' 대박', '_joy']);
         }
@@ -499,25 +500,37 @@ function CardComponent(props: { onClickButton: () => void }) {
 
     function setCategortText(category: string) {
         if (category === 'FRIENDSHIP') {
-            setFortuneCategory('우정');
+            setFortuneCategory('우정운');
         } else if (category === 'HAPPINESS') {
-            setFortuneCategory('행복');
-        } else if (category === 'HEALTH') {
-            setFortuneCategory('건강');
+            setFortuneCategory('행복운');
+        } else if (category === 'HEALTH' || category === 'HEALTH_B' || category === 'HEALTH_R') {
+            setFortuneCategory('건강운');
         } else if (category === 'LIFE') {
-            setFortuneCategory('갓생');
+            setFortuneCategory('갓생운');
         } else if (category === 'LOVE') {
-            setFortuneCategory('연애');
+            setFortuneCategory('연애운');
         } else if (category === 'MONEY') {
-            setFortuneCategory('금전');
+            setFortuneCategory('금전운');
         } else if (category === 'STUDY') {
-            setFortuneCategory('공부');
+            setFortuneCategory('공부운');
         } else {
             setFortuneCategory('행운');
         }
     }
 
-    const fetchData = async (id: string, score: string) => {
+    function setQRCategory(QRText: string) {
+        if (QRText === 'HEALTH_B' || QRText === 'HEALTH_R') {
+            setQRText('HEALTH');
+        } else if (QRText === 'LUCKY') {
+            setQRText('HAPPINESS');
+        } else if (QRText === 'HEALTH_R') {
+            setQRText('rabbit');
+        } else {
+            setQR(QRText);
+        }
+    }
+
+    const fetchData = async (id: string, score: string, QR: string) => {
         try {
             if (id !== '-1') {
                 const response = await instance.get('/api/v1/fortunes/' + id, {
@@ -526,6 +539,10 @@ function CardComponent(props: { onClickButton: () => void }) {
                 setFortuneData(response.data);
                 setCategortText(response.data.data.category);
                 setScoreText(Number(score));
+            } else if (QR !== '') {
+                setCategortText(QR);
+                setQRCategory(QR);
+                setScoreText(100);
             } else {
                 setCategortText('');
                 setScoreText(1);
@@ -555,8 +572,13 @@ function CardComponent(props: { onClickButton: () => void }) {
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
         setUrl(queryParams.get('imageUrl') || '');
-        fetchData(queryParams.get('fortuneId') || '-1', queryParams.get('fortuneScore') || '99');
-        preloading([url, DEFAULT]);
+        setQR(queryParams.get('QRCategory') || '');
+        fetchData(
+            queryParams.get('fortuneId') || '-1',
+            queryParams.get('fortuneScore') || '100',
+            queryParams.get('QRCategory') || ''
+        );
+        preloading([url]);
     }, []);
 
     return (
@@ -567,9 +589,15 @@ function CardComponent(props: { onClickButton: () => void }) {
                         <TextBubbleContainer className={changeText}>뒤집어서 운세를 확인해주세요~</TextBubbleContainer>
                         <ScoreComponenet className={changeText}>
                             <ScoreImage>
-                                <Lottie
-                                    animationData={require('../image/' + fortuneData.data.category + scoreRangeText[1])}
-                                />
+                                {QR !== '' ? (
+                                    <Lottie animationData={require('../image/' + QRText + scoreRangeText[1])} />
+                                ) : (
+                                    <Lottie
+                                        animationData={require('../image/' +
+                                            fortuneData.data.category +
+                                            scoreRangeText[1])}
+                                    />
+                                )}
                             </ScoreImage>
                             <ScoreText>오늘의 행운 지수는&nbsp;</ScoreText>
                             <ScoreNum>{scoreNumber}</ScoreNum>
@@ -580,7 +608,13 @@ function CardComponent(props: { onClickButton: () => void }) {
                 <CenterContainer>
                     <CardContainer>
                         <CardImageComponet className={flipped} onClick={handleCardClick}>
-                            {url === '' ? <CardFrontDefault /> : <CardFront url={url} />}
+                            {url !== '' ? (
+                                <CardFront url={url} />
+                            ) : QR === '' ? (
+                                <CardFrontDefault $QR={'HAPPINESS'} />
+                            ) : (
+                                <CardFrontDefault $QR={QR} />
+                            )}
                             <CardBack>
                                 <CardText>
                                     <CardTitle>
